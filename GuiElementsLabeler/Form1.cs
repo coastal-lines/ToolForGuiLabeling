@@ -101,12 +101,23 @@ namespace GuiElementsLabeler
                 g.DrawRectangle(pen, userRectange);
             }
 
-            for (int i = 0; i < UPPER; i++)
-            {
-                
-            }
+
 
             List<int> t = new List<int>();
+            for (int i = 0; i > r1.X & i < r2.X; i++)
+            {
+                for (int j = 0; j < gridCells.Count; j++)
+                {
+                    if ((r1.X >= gridCells[j].X & r1.X <= gridCells[j].X + w) &
+                        (r2.X >= gridCells[j].X & r2.X <= gridCells[j].X + w))
+                    {
+
+                    }
+                }
+            }
+
+            /*
+            
             for (int i = 0; i < gridCells.Count; i++)
             {
                 if ((r1.X >= gridCells[i].X & r1.X <= gridCells[i].X + w) & 
@@ -117,7 +128,7 @@ namespace GuiElementsLabeler
                     t.Add(i);
                 }
             }
-
+            */
             foreach (var item in t)
             {
                 Console.WriteLine(item);
