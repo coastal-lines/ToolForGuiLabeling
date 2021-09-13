@@ -39,7 +39,10 @@ namespace GuiElementsLabeler
             Pen p = new Pen(Color.LawnGreen);
             p.Width = 2.0f;
 
-            Font f = new Font("Arial", 14);
+            Font f = new Font("Arial", 6);
+
+            List<int> cellX = new List<int>();
+            List<int> cellY = new List<int>();
 
             //horizontal lines
             for (int i = 0; i < pictureBox1.Height; i++)
@@ -47,6 +50,7 @@ namespace GuiElementsLabeler
                 if (i % h == 0)
                 {
                     g.DrawLine(p, 0, i, pictureBox1.Width, i);
+                    cellY.Add(i);
                 }
             }
             
@@ -56,7 +60,20 @@ namespace GuiElementsLabeler
                 if (i % w == 0)
                 {
                     g.DrawLine(p, i, 0, i, pictureBox1.Height);
+                    cellX.Add(i);
                 }
+            }
+
+            //print cell number
+            List<Point> cells = new List<Point>();
+            for (int i = 0; i < cellX.Count; i++)
+            {
+                cells.Add(new Point(cellX[i], cellY[i]));
+            }
+
+            for (int i = 0; i < cells.Count; i++)
+            {
+                g.DrawString("Hello .NET Guide!", f, Brushes.Green, cells[i]);
             }
         }
     }
