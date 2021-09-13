@@ -36,44 +36,31 @@ namespace GuiElementsLabeler
 
             Graphics g = pictureBox1.CreateGraphics();
 
-            Pen p = new Pen(Color.LawnGreen);
-            p.Width = 2.0f;
+            Pen pen = new Pen(Color.LawnGreen);
+            pen.Width = 2.0f;
 
-            Font f = new Font("Arial", 6);
-
-            List<int> cellX = new List<int>();
-            List<int> cellY = new List<int>();
+            Font f = new Font("Arial", 16);
 
             //horizontal lines
-            for (int i = 0; i < pictureBox1.Height; i++)
+            int count = 0;
+            for (int i = 1; i < pictureBox1.Height; i++)
             {
                 if (i % h == 0)
                 {
-                    g.DrawLine(p, 0, i, pictureBox1.Width, i);
-                    cellY.Add(i);
-                }
-            }
-            
-            //vertical lines
-            for (int i = 0; i < pictureBox1.Width; i++)
-            {
-                if (i % w == 0)
-                {
-                    g.DrawLine(p, i, 0, i, pictureBox1.Height);
-                    cellX.Add(i);
-                }
-            }
+                    g.DrawLine(pen, 0, i, pictureBox1.Width, i);
 
-            //print cell number
-            List<Point> cells = new List<Point>();
-            for (int i = 0; i < cellX.Count; i++)
-            {
-                cells.Add(new Point(cellX[i], cellY[i]));
-            }
-
-            for (int i = 0; i < cells.Count; i++)
-            {
-                g.DrawString("Hello .NET Guide!", f, Brushes.Green, cells[i]);
+                    for (int j = 1; j < pictureBox1.Width; j++)
+                    {
+                        if (j % w == 0)
+                        {
+                            g.DrawLine(pen, j, 0, j, pictureBox1.Height);
+                            count = count + 1;
+                            Console.WriteLine(count);
+                            Point point = new Point(j - (w / 2), i - (h / 2));
+                            g.DrawString(count.ToString(), f, Brushes.Green, point);
+                        }
+                    }
+                }
             }
         }
     }
