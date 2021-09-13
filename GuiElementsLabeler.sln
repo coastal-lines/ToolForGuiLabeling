@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiElementsLabeler", "GuiElementsLabeler\GuiElementsLabeler.csproj", "{FF59A4FF-4B21-42B1-A7CC-B9049DDEFBAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF59A4FF-4B21-42B1-A7CC-B9049DDEFBAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF59A4FF-4B21-42B1-A7CC-B9049DDEFBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF59A4FF-4B21-42B1-A7CC-B9049DDEFBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF59A4FF-4B21-42B1-A7CC-B9049DDEFBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1102AA43-E121-4A2E-AEDD-438BF5268F60}
+	EndGlobalSection
+EndGlobal
