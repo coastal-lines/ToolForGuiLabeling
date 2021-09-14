@@ -10,25 +10,6 @@ using System.Windows.Forms;
 
 namespace GuiElementsLabeler
 {
-    public class GuiElement
-    {
-        private string Name { get; set; }
-        private string Type { get; set; }
-        private string Width { get; set; }
-        private string Height { get; set; }
-        private string Parent { get; set; }
-        private string ColorActive { get; set; }
-        private string ColorNonActive { get; set; }
-        private string Text { get; set; }
-        private List<string> Columns { get; set; }
-        private bool ScrollVertical { get; set; }
-        private bool ScrollHorizontal { get; set; }
-        private List<int> Grid { get; set; }
-        private string ExtraDataExpandDirection { get; set; }
-        private string ExtraDataSize{ get; set; }
-        private string ExtraDataText{ get; set; }
-    }
-
     public partial class Form1 : Form
     {
         private List<Point> gridCells = new List<Point>();
@@ -46,8 +27,8 @@ namespace GuiElementsLabeler
         private void Button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
-            pictureBox1.Width = Form1.ActiveForm.Width;
-            pictureBox1.Height = Form1.ActiveForm.Height;
+            pictureBox1.Width = Form1.ActiveForm.Width - 100;
+            pictureBox1.Height = Form1.ActiveForm.Height - 100;
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -101,21 +82,45 @@ namespace GuiElementsLabeler
                 g.DrawRectangle(pen, userRectange);
             }
 
-
-
             List<int> t = new List<int>();
-            for (int i = 0; i > r1.X & i < r2.X; i++)
+
+            for (int i = r1.X; i >= r1.X & i <= r2.X; i++)
             {
                 for (int j = 0; j < gridCells.Count; j++)
                 {
-                    if ((r1.X >= gridCells[j].X & r1.X <= gridCells[j].X + w) &
-                        (r2.X >= gridCells[j].X & r2.X <= gridCells[j].X + w))
+                    if ((r1.X >= gridCells[j].X && r1.X <= gridCells[j].X + w) &
+                        (r1.Y >= gridCells[j].Y && r1.Y <= gridCells[j].Y + h))
+                        //(r1.Y >= gridCells[j].Y & r1.Y <= gridCells[j].Y + h) &
+                        //(r2.Y >= gridCells[j].Y & r2.Y <= gridCells[j].Y + h)
                     {
-
+                        //Console.WriteLine(j);
+                        if (!t.Contains(j))
+                        {
+                            t.Add(j);
+                        }
+                        continue;
                     }
                 }
             }
-
+            
+            for (int i = r1.X; i >= r1.X & i <= r2.X; i++)
+            {
+                for (int j = 0; j < gridCells.Count; j++)
+                {
+                    if ((r2.X >= gridCells[j].X && r2.X <= gridCells[j].X + w) &
+                        (r2.Y >= gridCells[j].Y && r2.Y <= gridCells[j].Y + h))
+                        //(r1.Y >= gridCells[j].Y & r1.Y <= gridCells[j].Y + h) &
+                        //(r2.Y >= gridCells[j].Y & r2.Y <= gridCells[j].Y + h)
+                    {
+                        if (!t.Contains(j))
+                        {
+                            t.Add(j);
+                        }
+                        continue;
+                    }
+                }
+            }
+            
             /*
             
             for (int i = 0; i < gridCells.Count; i++)
@@ -136,5 +141,24 @@ namespace GuiElementsLabeler
 
             this.Invalidate();
         }
+    }
+
+    public class GuiElement
+    {
+        private string Name { get; set; }
+        private string Type { get; set; }
+        private string Width { get; set; }
+        private string Height { get; set; }
+        private string Parent { get; set; }
+        private string ColorActive { get; set; }
+        private string ColorNonActive { get; set; }
+        private string Text { get; set; }
+        private List<string> Columns { get; set; }
+        private bool ScrollVertical { get; set; }
+        private bool ScrollHorizontal { get; set; }
+        private List<int> Grid { get; set; }
+        private string ExtraDataExpandDirection { get; set; }
+        private string ExtraDataSize { get; set; }
+        private string ExtraDataText { get; set; }
     }
 }
