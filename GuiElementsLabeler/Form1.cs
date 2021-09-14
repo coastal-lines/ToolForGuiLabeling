@@ -12,9 +12,12 @@ namespace GuiElementsLabeler
 {
     public partial class Form1 : Form
     {
-        private List<Point> gridCells = new List<Point>();
-        private Rectangle r1;
-        private Rectangle r2;
+        //private List<Point> gridCells = new List<Point>();
+        private List<Cell> gridCellsTemp = new List<Cell>();
+        //private Rectangle r1;
+        //private Rectangle r2;
+        private Point p1;
+        private Point p2;
         private Graphics g;
         private int w;
         private int h;
@@ -55,7 +58,14 @@ namespace GuiElementsLabeler
                             g.DrawLine(pen, j, 0, j, pictureBox1.Height);
                             count += 1;
                             Point point = new Point(j - (w / 2), i - (h / 2));
-                            gridCells.Add(new Point(j - w, i - h));
+                            //gridCells.Add(new Point(j - w, i - h));
+
+                            var x1 = j - w;
+                            var y1 = i - h;
+                            var x2 = j;
+                            var y2 = i;
+
+                            gridCellsTemp.Add(new Cell(){X1 = x1, X2 = x2, Y1 = y1, Y2 = y2});
                             g.DrawString(count.ToString(), f, Brushes.Green, point);
                         }
                     }
@@ -65,31 +75,33 @@ namespace GuiElementsLabeler
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            r1 = new Rectangle(e.X, e.Y, 0, 0);
+            //r1 = new Rectangle(e.X, e.Y, 0, 0);
+            p1 = new Point(e.X, e.Y);
             //Console.WriteLine(r1);
             this.Invalidate();
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            r2 = new Rectangle(e.X, e.Y, 0, 0);
+            //r2 = new Rectangle(e.X, e.Y, 0, 0);
+            p2 = new Point(e.X, e.Y);
             //Console.WriteLine(r2);
 
-            if (g != null && (r2.X != 0 & r2.Y !=0))
+            if (g != null && (p2.X != 0 & p2.Y !=0))
             {
                 Pen pen = new Pen(Color.Red, 2);
-                var userRectange = new Rectangle(r1.X, r1.Y, r2.X - r1.X, r2.Y - r1.Y);
+                var userRectange = new Rectangle(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
                 g.DrawRectangle(pen, userRectange);
             }
 
             List<int> t = new List<int>();
-
-            for (int i = r1.X; i >= r1.X & i <= r2.X; i++)
+            /*
+            for (int i = p1.X; i >= p1.X & i <= p2.X; i++)
             {
-                for (int j = 0; j < gridCells.Count; j++)
+                for (int j = 0; j < gridCellsTemp.Count; j++)
                 {
-                    if ((r1.X >= gridCells[j].X && r1.X <= gridCells[j].X + w) &
-                        (r1.Y >= gridCells[j].Y && r1.Y <= gridCells[j].Y + h))
+                    if ((p1.X >= gridCellsTemp[j].X1 && p1.X <= gridCellsTemp[j].X2) &
+                        (p1.Y >= gridCellsTemp[j].Y1 && p1.Y <= gridCellsTemp[j].Y2))
                         //(r1.Y >= gridCells[j].Y & r1.Y <= gridCells[j].Y + h) &
                         //(r2.Y >= gridCells[j].Y & r2.Y <= gridCells[j].Y + h)
                     {
@@ -103,12 +115,12 @@ namespace GuiElementsLabeler
                 }
             }
             
-            for (int i = r1.X; i >= r1.X & i <= r2.X; i++)
+            for (int i = p1.X; i >= p1.X & i <= p2.X; i++)
             {
-                for (int j = 0; j < gridCells.Count; j++)
+                for (int j = 0; j < gridCellsTemp.Count; j++)
                 {
-                    if ((r2.X >= gridCells[j].X && r2.X <= gridCells[j].X + w) &
-                        (r2.Y >= gridCells[j].Y && r2.Y <= gridCells[j].Y + h))
+                    if ((p2.X >= gridCellsTemp[j].X1 && p2.X <= gridCellsTemp[j].X2) &
+                        (p2.Y >= gridCellsTemp[j].Y1 && p2.Y <= gridCellsTemp[j].Y2))
                         //(r1.Y >= gridCells[j].Y & r1.Y <= gridCells[j].Y + h) &
                         //(r2.Y >= gridCells[j].Y & r2.Y <= gridCells[j].Y + h)
                     {
@@ -120,27 +132,94 @@ namespace GuiElementsLabeler
                     }
                 }
             }
+            */
             
             /*
-            
-            for (int i = 0; i < gridCells.Count; i++)
+            for (int i = 0; i < gridCellsTemp.Count; i++)
             {
-                if ((r1.X >= gridCells[i].X & r1.X <= gridCells[i].X + w) & 
-                    (r2.X >= gridCells[i].X & r2.X <= gridCells[i].X + w) &
-                    (r1.Y >= gridCells[i].Y & r1.Y <= gridCells[i].Y + h) &
-                    (r2.Y >= gridCells[i].Y & r2.Y <= gridCells[i].Y + h))
+                var segmentW = gridCellsTemp[i].X2 - gridCellsTemp[i].X1;
+                var segmentH = gridCellsTemp[i].Y2 - gridCellsTemp[i].Y1;
+
+                if (p1.X > gridCellsTemp[i].X1 && p1.Y > gridCellsTemp[i].Y1)
                 {
-                    t.Add(i);
+                    if (!t.Contains(i))
+                    {
+                        t.Add(i);
+                    }
                 }
             }
             */
-            foreach (var item in t)
+            List<int> t2 = new List<int>();
+            List<int> t3 = new List<int>();
+            var userW = GenerateSegment(p1.X, p1.X + w);
+            var userH = GenerateSegment(p1.Y, p1.Y + h);
+            for (int i = 0; i < gridCellsTemp.Count; i++)
+            {
+                var lineW = GenerateSegment(gridCellsTemp[i].X1, gridCellsTemp[i].X2);
+                var lineH = GenerateSegment(gridCellsTemp[i].Y1, gridCellsTemp[i].Y2);
+
+                for (int j = 0; j < lineW.Count; j++)
+                {
+                    for (int k = 0; k < userW.Count; k++)
+                    {
+                        if (lineW[j] == userW[k])
+                        {
+                            if (!t2.Contains(i))
+                            {
+                                t2.Add(i);
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                for (int j = 0; j < lineH.Count; j++)
+                {
+                    for (int k = 0; k < userH.Count; k++)
+                    {
+                        if (lineH[j] == userH[k])
+                        {
+                            if (!t3.Contains(i))
+                            {
+                                t3.Add(i);
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+
+
+            foreach (var item in t2)
             {
                 Console.WriteLine(item);
             }
 
             this.Invalidate();
         }
+
+        public List<int> GenerateSegment(int v1, int v2)
+        {
+            var l = new List<int>();
+
+            for (int i = v1; i < v2; i++)
+            {
+                l.Add(i);
+            }
+
+            return l;
+        }
+    }
+
+    public class Cell
+    {
+        public int X1 { get; set; }
+        public int Y1 { get; set; }
+        public int X2 { get; set; }
+        public int Y2 { get; set; }
     }
 
     public class GuiElement
