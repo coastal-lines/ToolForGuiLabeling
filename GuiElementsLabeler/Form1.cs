@@ -95,105 +95,49 @@ namespace GuiElementsLabeler
             }
 
             List<int> t = new List<int>();
-            /*
-            for (int i = p1.X; i >= p1.X & i <= p2.X; i++)
-            {
-                for (int j = 0; j < gridCellsTemp.Count; j++)
-                {
-                    if ((p1.X >= gridCellsTemp[j].X1 && p1.X <= gridCellsTemp[j].X2) &
-                        (p1.Y >= gridCellsTemp[j].Y1 && p1.Y <= gridCellsTemp[j].Y2))
-                        //(r1.Y >= gridCells[j].Y & r1.Y <= gridCells[j].Y + h) &
-                        //(r2.Y >= gridCells[j].Y & r2.Y <= gridCells[j].Y + h)
-                    {
-                        //Console.WriteLine(j);
-                        if (!t.Contains(j))
-                        {
-                            t.Add(j);
-                        }
-                        continue;
-                    }
-                }
-            }
-            
-            for (int i = p1.X; i >= p1.X & i <= p2.X; i++)
-            {
-                for (int j = 0; j < gridCellsTemp.Count; j++)
-                {
-                    if ((p2.X >= gridCellsTemp[j].X1 && p2.X <= gridCellsTemp[j].X2) &
-                        (p2.Y >= gridCellsTemp[j].Y1 && p2.Y <= gridCellsTemp[j].Y2))
-                        //(r1.Y >= gridCells[j].Y & r1.Y <= gridCells[j].Y + h) &
-                        //(r2.Y >= gridCells[j].Y & r2.Y <= gridCells[j].Y + h)
-                    {
-                        if (!t.Contains(j))
-                        {
-                            t.Add(j);
-                        }
-                        continue;
-                    }
-                }
-            }
-            */
-            
-            /*
-            for (int i = 0; i < gridCellsTemp.Count; i++)
-            {
-                var segmentW = gridCellsTemp[i].X2 - gridCellsTemp[i].X1;
-                var segmentH = gridCellsTemp[i].Y2 - gridCellsTemp[i].Y1;
-
-                if (p1.X > gridCellsTemp[i].X1 && p1.Y > gridCellsTemp[i].Y1)
-                {
-                    if (!t.Contains(i))
-                    {
-                        t.Add(i);
-                    }
-                }
-            }
-            */
             List<int> t2 = new List<int>();
             List<int> t3 = new List<int>();
-            var userW = GenerateSegment(p1.X, p1.X + w);
-            var userH = GenerateSegment(p1.Y, p1.Y + h);
+            var userW = GenerateSegment(p1.X, p2.X);
+            var userH = GenerateSegment(p1.Y, p2.Y);
+
+            //обходим все ячейки
             for (int i = 0; i < gridCellsTemp.Count; i++)
             {
                 var lineW = GenerateSegment(gridCellsTemp[i].X1, gridCellsTemp[i].X2);
                 var lineH = GenerateSegment(gridCellsTemp[i].Y1, gridCellsTemp[i].Y2);
 
+                //проверяем совпадение по горизонтали
                 for (int j = 0; j < lineW.Count; j++)
                 {
                     for (int k = 0; k < userW.Count; k++)
                     {
-                        if (lineW[j] == userW[k])
+                        if (userW[k] == lineW[j])
                         {
-                            if (!t2.Contains(i))
+                            //проверяем совпадение по вертикали
+                            for (int m = 0; m < lineH.Count; m++)
                             {
-                                t2.Add(i);
-                            }
+                                for (int l = 0; l < userH.Count; l++)
+                                {
+                                    if (userH[l] == lineH[m])
+                                    {
+                                        if (!t3.Contains(i))
+                                        {
+                                            t3.Add(i);
+                                        }
 
-                            break;
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
-                }
 
-                for (int j = 0; j < lineH.Count; j++)
-                {
-                    for (int k = 0; k < userH.Count; k++)
-                    {
-                        if (lineH[j] == userH[k])
-                        {
-                            if (!t3.Contains(i))
-                            {
-                                t3.Add(i);
-                            }
-
-                            break;
-                        }
-                    }
                 }
             }
 
 
 
-            foreach (var item in t2)
+            foreach (var item in t3)
             {
                 Console.WriteLine(item);
             }
