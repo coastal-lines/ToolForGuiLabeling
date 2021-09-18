@@ -12,10 +12,7 @@ namespace GuiElementsLabeler
 {
     public partial class Form1 : Form
     {
-        //private List<Point> gridCells = new List<Point>();
         private List<Cell> gridCellsTemp = new List<Cell>();
-        //private Rectangle r1;
-        //private Rectangle r2;
         private Point p1;
         private Point p2;
         private Graphics g;
@@ -49,13 +46,13 @@ namespace GuiElementsLabeler
             {
                 if (i % h == 0)
                 {
-                    g.DrawLine(pen, 0, i, pictureBox1.Width, i);
+                    //g.DrawLine(pen, 0, i, pictureBox1.Width, i);
 
                     for (int j = 1; j < pictureBox1.Width; j++)
                     {
                         if (j % w == 0)
                         {
-                            g.DrawLine(pen, j, 0, j, pictureBox1.Height);
+                            //g.DrawLine(pen, j, 0, j, pictureBox1.Height);
                             count += 1;
                             Point point = new Point(j - (w / 2), i - (h / 2));
                             //gridCells.Add(new Point(j - w, i - h));
@@ -75,17 +72,13 @@ namespace GuiElementsLabeler
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            //r1 = new Rectangle(e.X, e.Y, 0, 0);
             p1 = new Point(e.X, e.Y);
-            //Console.WriteLine(r1);
             this.Invalidate();
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            //r2 = new Rectangle(e.X, e.Y, 0, 0);
             p2 = new Point(e.X, e.Y);
-            //Console.WriteLine(r2);
 
             if (g != null && (p2.X != 0 & p2.Y !=0))
             {
@@ -94,9 +87,99 @@ namespace GuiElementsLabeler
                 g.DrawRectangle(pen, userRectange);
             }
 
-            List<int> t = new List<int>();
-            List<int> t2 = new List<int>();
-            List<int> t3 = new List<int>();
+            if (checkBox1.Checked == true)
+            {
+                DrawGrid();
+            }
+
+            this.Invalidate();
+        }
+
+        public void DrawGrid()
+        {
+            var customGridWidth = p2.X - p1.X;
+            var customGridHeight = p2.Y - p1.Y;
+
+
+            int customCellWidth = customGridWidth / 8;
+            int customCellHeight = customGridHeight / 8;
+
+            g = pictureBox1.CreateGraphics();
+            Font f = new Font("Arial", 8);
+            Pen pen = new Pen(Color.Aqua);
+            pen.Width = 3.0f;
+
+            int count = 0;
+            for (int i = p1.X; i < p2.X; i ++)
+            {
+                if (i % customCellWidth == 0)
+                {
+                    g.DrawLine(pen, p1.X + i, p1.Y, p1.X + i, p2.Y);
+
+                    for (int j = p1.Y; j < p2.Y; j++)
+                    {
+                        if ((j % customCellHeight == 0) && (j >= p1.Y + customCellHeight))
+                        {
+                            g.DrawLine(pen, p1.X, j, p2.X, j);
+                            count += 1;
+                            Point point = new Point(j - (customGridWidth / 2), i - (customGridHeight / 2));
+
+                            g.DrawString(count.ToString(), f, Brushes.Green, point);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public void DrawGrid2()
+        {
+            var customGridWidth = p2.X - p1.X;
+            var customGridHeight = p2.Y - p1.Y;
+
+            float f2 = (float)Math.Round((float)5);
+
+            float customCellWidth = (float)Math.Round(((float)p2.X - (float)p1.X) / 8.0f, 1);
+            float customCellHeight = (float)Math.Round(((float)p2.Y - (float)p1.Y) / 8.0f, 1);
+
+            g = pictureBox1.CreateGraphics();
+            Font f = new Font("Arial", 8);
+            Pen pen = new Pen(Color.Aqua);
+            pen.Width = 1.0f;
+
+            int count = 0;
+            for (float i = (float)p1.X; i < p2.X; i+=0.1f)
+            {
+                if (Math.Round(i,1) % customCellWidth == 0)
+                {
+                    g.DrawLine(pen, i, p1.Y, i, p2.Y);
+                    /*
+                    for (int j = p1.X; j < customGridWidth; j++)
+                    {
+                        if (j % customCellWidth == 0)
+                        {
+                            g.DrawLine(pen, p2.X, 0, j, customGridHeight);
+                            count += 1;
+                            Point point = new Point(j - (customGridWidth / 2), i - (customGridHeight / 2));
+                            //gridCells.Add(new Point(j - w, i - h));
+
+                            //var x1 = j - customGridWidth;
+                            //var y1 = i - customGridHeight;
+                            //var x2 = j;
+                            //var y2 = i;
+
+                            //gridCellsTemp.Add(new Cell() { X1 = x1, X2 = x2, Y1 = y1, Y2 = y2 });
+                            g.DrawString(count.ToString(), f, Brushes.Green, point);
+                        }
+                    }
+                    */
+                }
+            }
+        }
+
+        public List<int> GetCellsForUserSelection()
+        {
+            List<int> cellsOfSelection = new List<int>();
             var userW = GenerateSegment(p1.X, p2.X);
             var userH = GenerateSegment(p1.Y, p2.Y);
 
@@ -120,9 +203,9 @@ namespace GuiElementsLabeler
                                 {
                                     if (userH[l] == lineH[m])
                                     {
-                                        if (!t3.Contains(i))
+                                        if (!cellsOfSelection.Contains(i))
                                         {
-                                            t3.Add(i);
+                                            cellsOfSelection.Add(i);
                                         }
 
                                         break;
@@ -135,14 +218,12 @@ namespace GuiElementsLabeler
                 }
             }
 
-
-
-            foreach (var item in t3)
+            foreach (var item in cellsOfSelection)
             {
                 Console.WriteLine(item);
             }
 
-            this.Invalidate();
+            return cellsOfSelection;
         }
 
         public List<int> GenerateSegment(int v1, int v2)
