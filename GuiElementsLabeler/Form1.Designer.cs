@@ -53,6 +53,7 @@ namespace GuiElementsLabeler
             this.textBox14 = new System.Windows.Forms.TextBox();
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox16 = new System.Windows.Forms.TextBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,7 +105,7 @@ namespace GuiElementsLabeler
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(145, 23);
             this.button2.TabIndex = 28;
-            this.button2.Text = "button2";
+            this.button2.Text = "new layout";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click_1);
             // 
@@ -115,6 +116,7 @@ namespace GuiElementsLabeler
             this.textBox4.Size = new System.Drawing.Size(145, 20);
             this.textBox4.TabIndex = 27;
             this.textBox4.Text = "text";
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBox5
             // 
@@ -256,11 +258,23 @@ namespace GuiElementsLabeler
             this.textBox16.TabIndex = 39;
             this.textBox16.Text = "additional: text";
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(357, 4);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(85, 17);
+            this.checkBox2.TabIndex = 40;
+            this.checkBox2.Text = "color peaker";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1384, 682);
+            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.textBox16);
             this.Controls.Add(this.textBox13);
             this.Controls.Add(this.textBox14);
@@ -317,6 +331,7 @@ namespace GuiElementsLabeler
         private TextBox textBox14;
         private TextBox textBox15;
         private TextBox textBox16;
+        private CheckBox checkBox2;
     }
 }
 

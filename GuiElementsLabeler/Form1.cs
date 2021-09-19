@@ -10,12 +10,18 @@ namespace GuiElementsLabeler
 {
     public partial class Form1 : Form
     {
-        public List<Cell> mainGridCells = new List<Cell>();
+        //temporary members
         private Point p1;
         private Point p2;
         private Graphics g;
         private int w;
         private int h;
+
+        //members for element
+        public List<Cell> mainGridCells = new List<Cell>();
+        private Color color = new Color();
+        private int Width;
+        private int Height;
 
         public Form1()
         {
@@ -82,7 +88,18 @@ namespace GuiElementsLabeler
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            p1 = new Point(e.X, e.Y);
+            if (checkBox2.Checked == true)
+            {
+                var p = new Point(e.X, e.Y);
+                var bmp = (Bitmap)pictureBox1.Image;
+                color = bmp.GetPixel(p.X, p.Y);
+                textBox5.Text = color.R.ToString() + " " + color.G.ToString() + " " + color.B.ToString() + " ";
+            }
+            else
+            {
+                p1 = new Point(e.X, e.Y);
+            }
+
             this.Invalidate();
         }
 
@@ -147,7 +164,7 @@ namespace GuiElementsLabeler
             }
         }
 
-        public string CropImageAndReturnPath(Image image,int x, int y, int width, int height, string name)
+        public string CropImageAndReturnPath(Image image, int x, int y, int width, int height, string name)
         {
             var rectange = new Rectangle(0, 0, width, height);
             var bmp = new Bitmap(width, height);
@@ -233,9 +250,28 @@ namespace GuiElementsLabeler
         private void Button4_Click(object sender, EventArgs e)
         {
             Element el = new Element();
-            el.name = "main";
+            el.name = textBox1.Text;
             el.width = pictureBox1.Image.Width.ToString();
             el.heigth = pictureBox1.Image.Height.ToString();
+            el.type = textBox2.Text;
+            el.color = new ElementColor()
+            {
+                active = textBox5.Text
+            };
+            el.parent = textBox6.Text;
+            el.text = textBox4.Text;
+
+            el.columns = new List<string>();
+            //el.columns = textBox9.Text;
+
+            el.scroll = new ElementScroll()
+            {
+                vertical = textBox11.Text,
+                horizontal = textBox10.Text
+            };
+
+            el.grid = new List<int>();
+            el.grid = GetCellsForUserSelection();
 
             el.cells = new List<Cell>();
             foreach (var cell in mainGridCells)
@@ -249,9 +285,15 @@ namespace GuiElementsLabeler
                 });
             }
 
-            el.ImagePath = CropImageAndReturnPath(pictureBox1.Image, p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y, "main");
+            el.additional_data = new ElementAdditionalData()
+            {
+                arrow = textBox14.Text,
+                width = textBox15.Text,
+                heigth = textBox13.Text,
+                text = textBox16.Text
+            };
 
-            listBox1.Items.Add(el);
+            el.ImagePath = CropImageAndReturnPath(pictureBox1.Image, p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y, "main");
 
             string output = JsonConvert.SerializeObject(el, Formatting.Indented);
 
@@ -266,6 +308,9 @@ namespace GuiElementsLabeler
             {
                 Console.WriteLine("Exception: " + ex.Message);
             }
+
+            listBox1.Items.Add(el);
+
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -274,6 +319,23 @@ namespace GuiElementsLabeler
         }
 
         private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked == true)
+            {
+                pictureBox1.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                pictureBox1.Cursor = Cursors.Default;
+            }
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -286,30 +348,4 @@ namespace GuiElementsLabeler
         public int X2 { get; set; }
         public int Y2 { get; set; }
     }
-
-    /*
-    public class GuiElement
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Width { get; set; }
-        public string Height { get; set; }
-        public string Parent { get; set; }
-        public string ColorActive { get; set; }
-        public string ColorNonActive { get; set; }
-        public string Text { get; set; }
-        public List<string> Columns { get; set; }
-        public bool ScrollVertical { get; set; }
-        public bool ScrollHorizontal { get; set; }
-        public List<Cell> Grid { get; set; }
-        public string ExtraDataExpandDirection { get; set; }
-        public string ExtraDataSize { get; set; }
-        public string ExtraDataText { get; set; }
-
-        public GuiElement()
-        {
-            this.Grid = new List<Cell>();
-        }
-
-        */
 }
