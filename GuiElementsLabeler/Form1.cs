@@ -17,13 +17,16 @@ namespace GuiElementsLabeler
         public Form1()
         {
             InitializeComponent();
+
+            Form2 settingsForm = new Form2();
+            settingsForm.Show();
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
-            pictureBox1.Width = Form1.ActiveForm.Width - 300;
-            pictureBox1.Height = Form1.ActiveForm.Height - 100;
+            pictureBox1.Width = pictureBox1.Image.Width;
+            pictureBox1.Height = pictureBox1.Image.Height;
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -41,14 +44,13 @@ namespace GuiElementsLabeler
             {
                 if (i % h == 0)
                 {
-                    //g.DrawLine(pen, 0, i, pictureBox1.Width, i);
+                    g.DrawLine(pen, 0, i, pictureBox1.Width, i);
 
                     for (int j = 1; j < pictureBox1.Width; j++)
                     {
                         if (j % w == 0)
                         {
-                            //g.DrawLine(pen, j, 0, j, pictureBox1.Height);
-                            count += 1;
+                            g.DrawLine(pen, j, 0, j, pictureBox1.Height);
                             Point point = new Point(j - (w / 2), i - (h / 2));
 
                             var x1 = j - w;
@@ -56,8 +58,16 @@ namespace GuiElementsLabeler
                             var x2 = j;
                             var y2 = i;
 
-                            mainGridCells.Add(new Cell(){X1 = x1, X2 = x2, Y1 = y1, Y2 = y2});
-                            //g.DrawString(count.ToString(), f, Brushes.LawnGreen, point);
+                            mainGridCells.Add(new Cell()
+                            {
+                                X1 = x1, X2 = x2, Y1 = y1, Y2 = y2
+                            });
+
+                            g.DrawString(count.ToString(), f, Brushes.LawnGreen, point);
+                            Console.WriteLine(x2);
+                            Console.WriteLine(j);
+
+                            count += 1;
                         }
                     }
                 }
@@ -261,6 +271,14 @@ namespace GuiElementsLabeler
 
             return l;
         }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            GuiElement el = new GuiElement();
+            el.Name = "main";
+            el.Width = pictureBox1.Image.Width.ToString();
+            el.Height = pictureBox1.Image.Height.ToString();
+        }
     }
 
     public class Cell
@@ -273,20 +291,20 @@ namespace GuiElementsLabeler
 
     public class GuiElement
     {
-        private string Name { get; set; }
-        private string Type { get; set; }
-        private string Width { get; set; }
-        private string Height { get; set; }
-        private string Parent { get; set; }
-        private string ColorActive { get; set; }
-        private string ColorNonActive { get; set; }
-        private string Text { get; set; }
-        private List<string> Columns { get; set; }
-        private bool ScrollVertical { get; set; }
-        private bool ScrollHorizontal { get; set; }
-        private List<int> Grid { get; set; }
-        private string ExtraDataExpandDirection { get; set; }
-        private string ExtraDataSize { get; set; }
-        private string ExtraDataText { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Width { get; set; }
+        public string Height { get; set; }
+        public string Parent { get; set; }
+        public string ColorActive { get; set; }
+        public string ColorNonActive { get; set; }
+        public string Text { get; set; }
+        public List<string> Columns { get; set; }
+        public bool ScrollVertical { get; set; }
+        public bool ScrollHorizontal { get; set; }
+        public List<int> Grid { get; set; }
+        public string ExtraDataExpandDirection { get; set; }
+        public string ExtraDataSize { get; set; }
+        public string ExtraDataText { get; set; }
     }
 }
