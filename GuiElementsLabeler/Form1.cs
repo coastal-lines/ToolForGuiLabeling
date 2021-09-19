@@ -59,7 +59,10 @@ namespace GuiElementsLabeler
 
                             mainGridCells.Add(new Cell()
                             {
-                                X1 = x1, X2 = x2, Y1 = y1, Y2 = y2
+                                X1 = x1,
+                                X2 = x2,
+                                Y1 = y1,
+                                Y2 = y2
                             });
 
                             g.DrawString(count.ToString(), f, Brushes.LawnGreen, point);
@@ -83,7 +86,7 @@ namespace GuiElementsLabeler
         {
             p2 = new Point(e.X, e.Y);
 
-            if (g != null && (p2.X != 0 & p2.Y !=0))
+            if (g != null && (p2.X != 0 & p2.Y != 0))
             {
                 Pen pen = new Pen(Color.Red, 2);
                 var userRectange = new Rectangle(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
@@ -229,7 +232,7 @@ namespace GuiElementsLabeler
             listBox1.Items.Add(el);
 
             string output = JsonConvert.SerializeObject(el, Formatting.Indented);
-            
+
             try
             {
                 StreamWriter sw = new StreamWriter(@"C:\Temp\Photos\json.json");
