@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GuiElementsLabeler
 {
     public partial class Form1 : Form
     {
-        private List<Cell> gridCellsTemp = new List<Cell>();
+        private List<Cell> mainGridCells= new List<Cell>();
         private Point p1;
         private Point p2;
         private Graphics g;
@@ -27,7 +22,7 @@ namespace GuiElementsLabeler
         private void Button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
-            pictureBox1.Width = Form1.ActiveForm.Width - 100;
+            pictureBox1.Width = Form1.ActiveForm.Width - 300;
             pictureBox1.Height = Form1.ActiveForm.Height - 100;
         }
 
@@ -39,7 +34,7 @@ namespace GuiElementsLabeler
             g = pictureBox1.CreateGraphics();
             Font f = new Font("Arial", 16);
             Pen pen = new Pen(Color.LawnGreen);
-            pen.Width = 2.0f;
+            pen.Width = 1.0f;
 
             int count = 0;
             for (int i = 1; i < pictureBox1.Height; i++)
@@ -55,15 +50,14 @@ namespace GuiElementsLabeler
                             //g.DrawLine(pen, j, 0, j, pictureBox1.Height);
                             count += 1;
                             Point point = new Point(j - (w / 2), i - (h / 2));
-                            //gridCells.Add(new Point(j - w, i - h));
 
                             var x1 = j - w;
                             var y1 = i - h;
                             var x2 = j;
                             var y2 = i;
 
-                            gridCellsTemp.Add(new Cell(){X1 = x1, X2 = x2, Y1 = y1, Y2 = y2});
-                            g.DrawString(count.ToString(), f, Brushes.Green, point);
+                            mainGridCells.Add(new Cell(){X1 = x1, X2 = x2, Y1 = y1, Y2 = y2});
+                            //g.DrawString(count.ToString(), f, Brushes.LawnGreen, point);
                         }
                     }
                 }
@@ -97,38 +91,68 @@ namespace GuiElementsLabeler
 
         public void DrawGrid()
         {
-            var customGridWidth = p2.X - p1.X;
-            var customGridHeight = p2.Y - p1.Y;
+            var customWidth = p2.X - p1.X;
+            var customHeight = p2.Y - p1.Y;
 
 
-            int customCellWidth = customGridWidth / 8;
-            int customCellHeight = customGridHeight / 8;
+            int customCellWidth = customWidth / 8;
+            int customCellHeight = customHeight / 8;
 
-            g = pictureBox1.CreateGraphics();
+            var gr = pictureBox1.CreateGraphics();
             Font f = new Font("Arial", 8);
             Pen pen = new Pen(Color.Aqua);
-            pen.Width = 3.0f;
+            pen.Width = 1.0f;
 
+            int count = 0;
+            List<Cell> gridCells = new List<Cell>();
+            var remainderDivisionX = customWidth % 8;
+            var remainderDivisionY = customHeight % 8;
+            for (int i = p1.X; i < p2.X; i = i + customCellWidth)
+            {
+                gr.DrawLine(pen, i, p1.Y, i, p2.Y);
+
+                for (int j = p1.Y; j < p2.Y; j = j + customCellHeight)
+                {
+                    if (i < p2.X - remainderDivisionX && j < p2.Y - remainderDivisionY)
+                    {
+                        gr.DrawLine(pen, p1.X, j, p2.X, j);
+                        Point point = new Point(i, j);
+                        gr.DrawString(count.ToString(), f, Brushes.Aqua, point);
+                        count++;
+
+                        var x1 = i;
+                        var y1 = j;
+                        var x2 = i + customCellWidth;
+                        var y2 = j + customCellHeight;
+                        gridCells.Add(new Cell() { X1 = x1, X2 = x2, Y1 = y1, Y2 = y2 });
+                    }
+                }
+            }
+
+
+
+            /*
             int count = 0;
             for (int i = p1.X; i < p2.X; i ++)
             {
+
+
+
                 if (i % customCellWidth == 0)
                 {
-                    g.DrawLine(pen, p1.X + i, p1.Y, p1.X + i, p2.Y);
+                    gr.DrawLine(pen, p1.X + i, p1.Y, p1.X + i, p2.Y);
 
                     for (int j = p1.Y; j < p2.Y; j++)
                     {
                         if ((j % customCellHeight == 0) && (j >= p1.Y + customCellHeight))
                         {
-                            g.DrawLine(pen, p1.X, j, p2.X, j);
+                            gr.DrawLine(pen, p1.X, j, p2.X, j);
                             count += 1;
-                            Point point = new Point(j - (customGridWidth / 2), i - (customGridHeight / 2));
-
-                            g.DrawString(count.ToString(), f, Brushes.Green, point);
                         }
                     }
                 }
             }
+            */
         }
 
 
@@ -184,10 +208,10 @@ namespace GuiElementsLabeler
             var userH = GenerateSegment(p1.Y, p2.Y);
 
             //обходим все ячейки
-            for (int i = 0; i < gridCellsTemp.Count; i++)
+            for (int i = 0; i < mainGridCells.Count; i++)
             {
-                var lineW = GenerateSegment(gridCellsTemp[i].X1, gridCellsTemp[i].X2);
-                var lineH = GenerateSegment(gridCellsTemp[i].Y1, gridCellsTemp[i].Y2);
+                var lineW = GenerateSegment(mainGridCells[i].X1, mainGridCells[i].X2);
+                var lineH = GenerateSegment(mainGridCells[i].Y1, mainGridCells[i].Y2);
 
                 //проверяем совпадение по горизонтали
                 for (int j = 0; j < lineW.Count; j++)
