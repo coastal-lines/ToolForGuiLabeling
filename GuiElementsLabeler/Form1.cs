@@ -22,10 +22,12 @@ namespace GuiElementsLabeler
         private Color color = new Color();
         private int Width;
         private int Height;
+        Elements el = new Elements();
 
         public Form1()
         {
             InitializeComponent();
+            el.elements = new List<Element>();
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -249,34 +251,34 @@ namespace GuiElementsLabeler
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            Element el = new Element();
-            el.name = textBox1.Text;
-            el.width = pictureBox1.Image.Width.ToString();
-            el.heigth = pictureBox1.Image.Height.ToString();
-            el.type = textBox2.Text;
-            el.color = new ElementColor()
+            Element element = new Element();
+            element.name = textBox1.Text;
+            element.width = pictureBox1.Image.Width.ToString();
+            element.heigth = pictureBox1.Image.Height.ToString();
+            element.type = textBox2.Text;
+            element.color = new ElementColor()
             {
                 active = textBox5.Text
             };
-            el.parent = textBox6.Text;
-            el.text = textBox4.Text;
+            element.parent = textBox6.Text;
+            element.text = textBox4.Text;
 
-            el.columns = new List<string>();
+            element.columns = new List<string>();
             //el.columns = textBox9.Text;
 
-            el.scroll = new ElementScroll()
+            element.scroll = new ElementScroll()
             {
                 vertical = textBox11.Text,
                 horizontal = textBox10.Text
             };
 
-            el.grid = new List<int>();
-            el.grid = GetCellsForUserSelection();
+            element.grid = new List<int>();
+            element.grid = GetCellsForUserSelection();
 
-            el.cells = new List<Cell>();
+            element.cells = new List<Cell>();
             foreach (var cell in mainGridCells)
             {
-                el.cells.Add(new Cell()
+                element.cells.Add(new Cell()
                 {
                     X1 = cell.X1,
                     X2 = cell.X2,
@@ -285,7 +287,7 @@ namespace GuiElementsLabeler
                 });
             }
 
-            el.additional_data = new ElementAdditionalData()
+            element.additional_data = new ElementAdditionalData()
             {
                 arrow = textBox14.Text,
                 width = textBox15.Text,
@@ -293,24 +295,12 @@ namespace GuiElementsLabeler
                 text = textBox16.Text
             };
 
-            el.ImagePath = CropImageAndReturnPath(pictureBox1.Image, p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y, "main");
+            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y, "main");
 
-            string output = JsonConvert.SerializeObject(el, Formatting.Indented);
 
-            try
-            {
-                StreamWriter sw = new StreamWriter(@"C:\Temp2\Flash\MyLabeling\data\json.json");
-                sw.WriteLine(output);
-                sw.Close();
-                Console.WriteLine(output);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
-            }
+            listBox1.Items.Add(element);
 
-            listBox1.Items.Add(el);
-
+            el.elements.Add(element);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -338,6 +328,22 @@ namespace GuiElementsLabeler
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string output = JsonConvert.SerializeObject(el, Formatting.Indented);
+            try
+            {
+                StreamWriter sw = new StreamWriter(@"C:\Temp2\Flash\MyLabeling\data\json.json");
+                sw.WriteLine(output);
+                sw.Close();
+                Console.WriteLine(output);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
         }
     }
 

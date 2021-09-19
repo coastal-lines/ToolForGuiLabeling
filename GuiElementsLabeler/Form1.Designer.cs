@@ -54,6 +54,7 @@ namespace GuiElementsLabeler
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -269,11 +270,22 @@ namespace GuiElementsLabeler
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(529, 0);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 41;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1384, 682);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.textBox16);
             this.Controls.Add(this.textBox13);
@@ -332,6 +344,7 @@ namespace GuiElementsLabeler
         private TextBox textBox15;
         private TextBox textBox16;
         private CheckBox checkBox2;
+        private Button button5;
     }
 }
 

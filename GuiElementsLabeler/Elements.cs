@@ -50,4 +50,9 @@ namespace GuiElementsLabeler
         public List<Cell> cells { get; set; }
         public string ImagePath { get; set; }
     }
+
+    public class Elements
+    {
+        public List<Element> elements { get; set; }
+    }
 }
