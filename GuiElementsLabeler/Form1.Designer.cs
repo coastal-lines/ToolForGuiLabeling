@@ -43,6 +43,16 @@ namespace GuiElementsLabeler
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.textBox16 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,9 +100,9 @@ namespace GuiElementsLabeler
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(0, 325);
+            this.button2.Location = new System.Drawing.Point(0, 553);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(289, 23);
+            this.button2.Size = new System.Drawing.Size(145, 23);
             this.button2.TabIndex = 28;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
@@ -100,49 +110,50 @@ namespace GuiElementsLabeler
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(0, 299);
+            this.textBox4.Location = new System.Drawing.Point(0, 328);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(289, 20);
+            this.textBox4.Size = new System.Drawing.Size(145, 20);
             this.textBox4.TabIndex = 27;
             this.textBox4.Text = "text";
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(0, 273);
+            this.textBox5.Location = new System.Drawing.Point(0, 249);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(289, 20);
+            this.textBox5.Size = new System.Drawing.Size(145, 20);
             this.textBox5.TabIndex = 26;
-            this.textBox5.Text = "color";
+            this.textBox5.Text = "color active";
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(0, 247);
+            this.textBox6.Location = new System.Drawing.Point(0, 301);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(289, 20);
+            this.textBox6.Size = new System.Drawing.Size(145, 20);
             this.textBox6.TabIndex = 25;
             this.textBox6.Text = "parent";
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(0, 221);
+            this.textBox3.Location = new System.Drawing.Point(0, 197);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(289, 20);
+            this.textBox3.Size = new System.Drawing.Size(145, 20);
             this.textBox3.TabIndex = 24;
-            this.textBox3.Text = "size";
+            this.textBox3.Text = "width";
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(0, 195);
+            this.textBox2.Location = new System.Drawing.Point(0, 171);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(289, 20);
+            this.textBox2.Size = new System.Drawing.Size(145, 20);
             this.textBox2.TabIndex = 23;
             this.textBox2.Text = "type";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(0, 169);
+            this.textBox1.Location = new System.Drawing.Point(0, 156);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(289, 20);
+            this.textBox1.Size = new System.Drawing.Size(145, 20);
             this.textBox1.TabIndex = 22;
             this.textBox1.Text = "name";
             // 
@@ -151,7 +162,7 @@ namespace GuiElementsLabeler
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(0, 29);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(289, 134);
+            this.listBox1.Size = new System.Drawing.Size(145, 121);
             this.listBox1.TabIndex = 21;
             // 
             // button4
@@ -164,11 +175,102 @@ namespace GuiElementsLabeler
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(0, 223);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(145, 20);
+            this.textBox7.TabIndex = 30;
+            this.textBox7.Text = "heigth";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(0, 275);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(145, 20);
+            this.textBox8.TabIndex = 31;
+            this.textBox8.Text = "color non active";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(0, 354);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(145, 20);
+            this.textBox9.TabIndex = 32;
+            this.textBox9.Text = "columns";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(0, 406);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(145, 20);
+            this.textBox10.TabIndex = 33;
+            this.textBox10.Text = "horizontal scroll";
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(0, 380);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(145, 20);
+            this.textBox11.TabIndex = 34;
+            this.textBox11.Text = "vertical scroll";
+            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(0, 423);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(145, 20);
+            this.textBox12.TabIndex = 35;
+            this.textBox12.Text = "grid";
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(0, 501);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(145, 20);
+            this.textBox13.TabIndex = 38;
+            this.textBox13.Text = "additional: heigth";
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(0, 449);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(145, 20);
+            this.textBox14.TabIndex = 37;
+            this.textBox14.Text = "additional: arrow";
+            // 
+            // textBox15
+            // 
+            this.textBox15.Location = new System.Drawing.Point(0, 475);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.Size = new System.Drawing.Size(145, 20);
+            this.textBox15.TabIndex = 36;
+            this.textBox15.Text = "additional: width";
+            // 
+            // textBox16
+            // 
+            this.textBox16.Location = new System.Drawing.Point(0, 527);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.Size = new System.Drawing.Size(145, 20);
+            this.textBox16.TabIndex = 39;
+            this.textBox16.Text = "additional: text";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1384, 682);
+            this.Controls.Add(this.textBox16);
+            this.Controls.Add(this.textBox13);
+            this.Controls.Add(this.textBox14);
+            this.Controls.Add(this.textBox15);
+            this.Controls.Add(this.textBox12);
+            this.Controls.Add(this.textBox11);
+            this.Controls.Add(this.textBox10);
+            this.Controls.Add(this.textBox9);
+            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.textBox7);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox4);
@@ -205,6 +307,16 @@ namespace GuiElementsLabeler
         private TextBox textBox1;
         private ListBox listBox1;
         private Button button4;
+        private TextBox textBox7;
+        private TextBox textBox8;
+        private TextBox textBox9;
+        private TextBox textBox10;
+        private TextBox textBox11;
+        private TextBox textBox12;
+        private TextBox textBox13;
+        private TextBox textBox14;
+        private TextBox textBox15;
+        private TextBox textBox16;
     }
 }
 

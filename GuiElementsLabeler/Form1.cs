@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -23,13 +24,16 @@ namespace GuiElementsLabeler
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
+            pictureBox1.Load(@"C:\Temp2\Flash\MyLabeling\Tests.bmp");
             pictureBox1.Width = pictureBox1.Image.Width;
             pictureBox1.Height = pictureBox1.Image.Height;
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
+            p1 = new Point(0, 0);
+            p2 = new Point(pictureBox1.Image.Width, pictureBox1.Image.Height);
+
             w = pictureBox1.Width / 8;
             h = pictureBox1.Height / 8;
 
@@ -141,7 +145,23 @@ namespace GuiElementsLabeler
                     }
                 }
             }
+        }
 
+        public string CropImageAndReturnPath(Image image,int x, int y, int width, int height, string name)
+        {
+            var rectange = new Rectangle(0, 0, width, height);
+            var bmp = new Bitmap(width, height);
+            var graphics = Graphics.FromImage(bmp);
+            graphics.DrawImage(image, rectange, x, y, width, height, GraphicsUnit.Pixel);
+
+            string path = @"C:\Temp2\Flash\MyLabeling\data\" + name + ".bmp";
+            bmp.Save(path, ImageFormat.Bmp);
+
+            image.Dispose();
+            bmp.Dispose();
+            graphics.Dispose();
+
+            return path;
         }
 
         public List<int> GetCellsForUserSelection()
@@ -229,13 +249,15 @@ namespace GuiElementsLabeler
                 });
             }
 
+            el.ImagePath = CropImageAndReturnPath(pictureBox1.Image, p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y, "main");
+
             listBox1.Items.Add(el);
 
             string output = JsonConvert.SerializeObject(el, Formatting.Indented);
 
             try
             {
-                StreamWriter sw = new StreamWriter(@"C:\Temp\Photos\json.json");
+                StreamWriter sw = new StreamWriter(@"C:\Temp2\Flash\MyLabeling\data\json.json");
                 sw.WriteLine(output);
                 sw.Close();
                 Console.WriteLine(output);
@@ -244,6 +266,16 @@ namespace GuiElementsLabeler
             {
                 Console.WriteLine("Exception: " + ex.Message);
             }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

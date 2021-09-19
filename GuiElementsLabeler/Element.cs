@@ -48,5 +48,6 @@ namespace GuiElementsLabeler
         public List<int> grid { get; set; }
         public ElementAdditionalData additional_data { get; set; }
         public List<Cell> cells { get; set; }
+        public string ImagePath { get; set; }
     }
 }
