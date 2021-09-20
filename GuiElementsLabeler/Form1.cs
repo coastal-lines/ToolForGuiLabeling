@@ -4,25 +4,18 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using GuiElementsLabeler.Helpers;
+using GuiElementsLabeler.PictureBoxParts;
 using Newtonsoft.Json;
 
 namespace GuiElementsLabeler
 {
     public partial class Form1 : Form
     {
-        //temporary members
-        private Point p1;
-        private Point p2;
-        private Graphics g;
-        private int w;
-        private int h;
 
-        //members for element
-        public List<Cell> mainGridCells = new List<Cell>();
-        private Color color = new Color();
-        private int Width;
-        private int Height;
         Elements el = new Elements();
+        private Graphics g;
+        private DrawingMembers drawingMembers;
 
         public Form1()
         {
@@ -32,18 +25,23 @@ namespace GuiElementsLabeler
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Load(@"C:\Temp2\Flash\MyLabeling\Tests.bmp");
+            pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
             pictureBox1.Width = pictureBox1.Image.Width;
             pictureBox1.Height = pictureBox1.Image.Height;
         }
 
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            drawingMembers = new DrawingMembers();
+        }
+
         private void Button3_Click(object sender, EventArgs e)
         {
-            p1 = new Point(0, 0);
-            p2 = new Point(pictureBox1.Image.Width, pictureBox1.Image.Height);
+            drawingMembers.p1 = new Point(0, 0);
+            drawingMembers.p2 = new Point(pictureBox1.Image.Width, pictureBox1.Image.Height);
 
-            w = pictureBox1.Width / 8;
-            h = pictureBox1.Height / 8;
+            drawingMembers.w = pictureBox1.Width / 8;
+            drawingMembers.h = pictureBox1.Height / 8;
 
             g = pictureBox1.CreateGraphics();
             Font f = new Font("Arial", 16);
@@ -53,23 +51,23 @@ namespace GuiElementsLabeler
             int count = 0;
             for (int i = 1; i < pictureBox1.Height; i++)
             {
-                if (i % h == 0)
+                if (i % drawingMembers.h == 0)
                 {
                     g.DrawLine(pen, 0, i, pictureBox1.Width, i);
 
                     for (int j = 1; j < pictureBox1.Width; j++)
                     {
-                        if (j % w == 0)
+                        if (j % drawingMembers.w == 0)
                         {
                             g.DrawLine(pen, j, 0, j, pictureBox1.Height);
-                            Point point = new Point(j - (w / 2), i - (h / 2));
+                            Point point = new Point(j - (drawingMembers.w / 2), i - (drawingMembers.h / 2));
 
-                            var x1 = j - w;
-                            var y1 = i - h;
+                            var x1 = j - drawingMembers.w;
+                            var y1 = i - drawingMembers.h;
                             var x2 = j;
                             var y2 = i;
 
-                            mainGridCells.Add(new Cell()
+                            drawingMembers.GetListCell().Add(new Cell()
                             {
                                 X1 = x1,
                                 X2 = x2,
@@ -78,14 +76,67 @@ namespace GuiElementsLabeler
                             });
 
                             g.DrawString(count.ToString(), f, Brushes.LawnGreen, point);
-                            Console.WriteLine(x2);
-                            Console.WriteLine(j);
 
                             count += 1;
                         }
                     }
                 }
             }
+
+            //prepare main element and save
+            Element element = new Element();
+            element.name = textBox1.Text;
+            element.width = pictureBox1.Image.Width.ToString();
+            element.heigth = pictureBox1.Image.Height.ToString();
+            element.type = textBox2.Text;
+            element.color = new ElementColor()
+            {
+                active = textBox5.Text
+            };
+            element.parent = textBox6.Text;
+            element.text = textBox4.Text;
+
+            element.columns = new List<string>();
+            //el.columns = textBox9.Text;
+
+            element.scroll = new ElementScroll()
+            {
+                vertical = textBox11.Text,
+                horizontal = textBox10.Text
+            };
+
+            element.grid = new List<int>();
+            element.grid = GetCellsForUserSelection();
+
+            element.cells = new List<ElementCell>();
+            foreach (var cell in drawingMembers.GetListCell())
+            {
+                element.cells.Add(new ElementCell()
+                {
+                    X1 = cell.X1,
+                    X2 = cell.X2,
+                    Y1 = cell.Y1,
+                    Y2 = cell.Y2
+                });
+            }
+
+            element.additional_data = new ElementAdditionalData()
+            {
+                arrow = textBox14.Text,
+                width = textBox15.Text,
+                heigth = textBox13.Text,
+                text = textBox16.Text
+            };
+
+            element.ImagePath = CropImageAndReturnPath(
+                pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, 
+                drawingMembers.p2.X - drawingMembers.p1.X, 
+                drawingMembers.p2.Y - drawingMembers.p1.Y, "main");
+
+
+            listBox1.Items.Add(element);
+
+            el.elements.Add(element);
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -94,12 +145,16 @@ namespace GuiElementsLabeler
             {
                 var p = new Point(e.X, e.Y);
                 var bmp = (Bitmap)pictureBox1.Image;
-                color = bmp.GetPixel(p.X, p.Y);
-                textBox5.Text = color.R.ToString() + " " + color.G.ToString() + " " + color.B.ToString() + " ";
+                drawingMembers.SetColor(bmp.GetPixel(p.X, p.Y)); //= bmp.GetPixel(p.X, p.Y);
+                textBox5.Text = drawingMembers.GetColor().R.ToString() + " " + drawingMembers.GetColor().G.ToString() + " " + drawingMembers.GetColor().B.ToString() + " ";
+            }
+            else if (checkBox3.Checked == true)
+            {
+                drawingMembers.p1 = new Point(e.X, e.Y);
             }
             else
             {
-                p1 = new Point(e.X, e.Y);
+                
             }
 
             this.Invalidate();
@@ -107,27 +162,30 @@ namespace GuiElementsLabeler
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            p2 = new Point(e.X, e.Y);
-
-            if (g != null && (p2.X != 0 & p2.Y != 0))
+            if (checkBox3.Checked == true)
             {
-                Pen pen = new Pen(Color.Red, 2);
-                var userRectange = new Rectangle(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
-                g.DrawRectangle(pen, userRectange);
-            }
+                drawingMembers.p2 = new Point(e.X, e.Y);
 
-            if (checkBox1.Checked == true)
-            {
-                DrawGrid();
-            }
+                if (g != null && (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0))
+                {
+                    Pen pen = new Pen(Color.Red, 2);
+                    var userRectange = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
+                    g.DrawRectangle(pen, userRectange);
+                }
 
-            this.Invalidate();
+                if (checkBox1.Checked == true)
+                {
+                    DrawGrid();
+                }
+
+                this.Invalidate();
+            }
         }
 
         public void DrawGrid()
         {
-            var customWidth = p2.X - p1.X;
-            var customHeight = p2.Y - p1.Y;
+            var customWidth = drawingMembers.p2.X - drawingMembers.p1.X;
+            var customHeight = drawingMembers.p2.Y - drawingMembers.p1.Y;
 
 
             int customCellWidth = customWidth / 8;
@@ -143,15 +201,15 @@ namespace GuiElementsLabeler
             var remainderDivisionX = customWidth % 8;
             var remainderDivisionY = customHeight % 8;
 
-            for (int j = p1.Y; j < p2.Y; j = j + customCellHeight)
+            for (int j = drawingMembers.p1.Y; j < drawingMembers.p2.Y; j = j + customCellHeight)
             {
-                gr.DrawLine(pen, p1.X, j, p2.X, j);
+                gr.DrawLine(pen, drawingMembers.p1.X, j, drawingMembers.p2.X, j);
 
-                for (int i = p1.X; i < p2.X; i = i + customCellWidth)
+                for (int i = drawingMembers.p1.X; i < drawingMembers.p2.X; i = i + customCellWidth)
                 {
-                    if (i < p2.X - remainderDivisionX && j < p2.Y - remainderDivisionY)
+                    if (i < drawingMembers.p2.X - remainderDivisionX && j < drawingMembers.p2.Y - remainderDivisionY)
                     {
-                        gr.DrawLine(pen, p1.X, j, p2.X, j);
+                        gr.DrawLine(pen, drawingMembers.p1.X, j, drawingMembers.p2.X, j);
                         Point point = new Point(i, j);
                         gr.DrawString(count.ToString(), f, Brushes.Aqua, point);
                         count++;
@@ -173,12 +231,12 @@ namespace GuiElementsLabeler
             var graphics = Graphics.FromImage(bmp);
             graphics.DrawImage(image, rectange, x, y, width, height, GraphicsUnit.Pixel);
 
-            string path = @"C:\Temp2\Flash\MyLabeling\data\" + name + ".bmp";
+            string path = @"C:\Temp\Photos\data\" + name + ".bmp";
             bmp.Save(path, ImageFormat.Bmp);
 
-            image.Dispose();
-            bmp.Dispose();
-            graphics.Dispose();
+            //image.Dispose();
+            //bmp.Dispose();
+            //graphics.Dispose();
 
             return path;
         }
@@ -186,14 +244,14 @@ namespace GuiElementsLabeler
         public List<int> GetCellsForUserSelection()
         {
             List<int> cellsOfSelection = new List<int>();
-            var userW = GenerateSegment(p1.X, p2.X);
-            var userH = GenerateSegment(p1.Y, p2.Y);
+            var userW = GenerateSegment(drawingMembers.p1.X, drawingMembers.p2.X);
+            var userH = GenerateSegment(drawingMembers.p1.Y, drawingMembers.p2.Y);
 
             //обходим все ячейки
-            for (int i = 0; i < mainGridCells.Count; i++)
+            for (int i = 0; i < drawingMembers.GetListCell().Count; i++)
             {
-                var lineW = GenerateSegment(mainGridCells[i].X1, mainGridCells[i].X2);
-                var lineH = GenerateSegment(mainGridCells[i].Y1, mainGridCells[i].Y2);
+                var lineW = GenerateSegment(drawingMembers.GetListCell()[i].X1, drawingMembers.GetListCell()[i].X2);
+                var lineH = GenerateSegment(drawingMembers.GetListCell()[i].Y1, drawingMembers.GetListCell()[i].Y2);
 
                 //проверяем совпадение по горизонтали
                 for (int j = 0; j < lineW.Count; j++)
@@ -226,7 +284,7 @@ namespace GuiElementsLabeler
 
             foreach (var item in cellsOfSelection)
             {
-                Console.WriteLine(item);
+                //Console.WriteLine(item);
             }
 
             return cellsOfSelection;
@@ -244,17 +302,14 @@ namespace GuiElementsLabeler
             return l;
         }
 
-        private void Button2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void Button4_Click(object sender, EventArgs e)
         {
             Element element = new Element();
             element.name = textBox1.Text;
-            element.width = pictureBox1.Image.Width.ToString();
-            element.heigth = pictureBox1.Image.Height.ToString();
+            //element.width = pictureBox1.Image.Width.ToString();
+            //element.heigth = pictureBox1.Image.Height.ToString();
+            element.width = (drawingMembers.p2.X - drawingMembers.p1.X).ToString();
+            element.heigth = (drawingMembers.p2.Y - drawingMembers.p2.Y).ToString();
             element.type = textBox2.Text;
             element.color = new ElementColor()
             {
@@ -275,10 +330,10 @@ namespace GuiElementsLabeler
             element.grid = new List<int>();
             element.grid = GetCellsForUserSelection();
 
-            element.cells = new List<Cell>();
-            foreach (var cell in mainGridCells)
+            element.cells = new List<ElementCell>();
+            foreach (var cell in drawingMembers.GetListCell())
             {
-                element.cells.Add(new Cell()
+                element.cells.Add(new ElementCell()
                 {
                     X1 = cell.X1,
                     X2 = cell.X2,
@@ -295,7 +350,7 @@ namespace GuiElementsLabeler
                 text = textBox16.Text
             };
 
-            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y, "main");
+            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, "main");
 
 
             listBox1.Items.Add(element);
@@ -332,26 +387,41 @@ namespace GuiElementsLabeler
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string output = JsonConvert.SerializeObject(el, Formatting.Indented);
-            try
-            {
-                StreamWriter sw = new StreamWriter(@"C:\Temp2\Flash\MyLabeling\data\json.json");
-                sw.WriteLine(output);
-                sw.Close();
-                Console.WriteLine(output);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
-            }
+            FilesHelper.SaveJsonFile(el);
         }
+
+
     }
 
-    public class Cell
+    public class DrawingMembers
     {
-        public int X1 { get; set; }
-        public int Y1 { get; set; }
-        public int X2 { get; set; }
-        public int Y2 { get; set; }
+        private List<Cell> gridCells = new List<Cell>();
+        private Color color = new Color();
+        public Point p1 { get; set; }
+        public Point p2 { get; set; }
+        public int w { get; set; }
+        public int h { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        public List<Cell> GetListCell()
+        {
+            return gridCells;
+        }
+
+        public void SetListCell(List<Cell> gridCells)
+        {
+            this.gridCells = gridCells;
+        }
+
+        public Color GetColor()
+        {
+            return color;
+        }
+
+        public void SetColor(Color color)
+        {
+            this.color = color;
+        }
     }
 }
