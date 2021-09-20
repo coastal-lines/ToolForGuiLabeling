@@ -32,7 +32,7 @@ namespace GuiElementsLabeler
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Load(@"C:\Temp2\Flash\MyLabeling\Tests.bmp");
+            pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
             pictureBox1.Width = pictureBox1.Image.Width;
             pictureBox1.Height = pictureBox1.Image.Height;
         }
@@ -78,8 +78,6 @@ namespace GuiElementsLabeler
                             });
 
                             g.DrawString(count.ToString(), f, Brushes.LawnGreen, point);
-                            Console.WriteLine(x2);
-                            Console.WriteLine(j);
 
                             count += 1;
                         }
@@ -97,9 +95,13 @@ namespace GuiElementsLabeler
                 color = bmp.GetPixel(p.X, p.Y);
                 textBox5.Text = color.R.ToString() + " " + color.G.ToString() + " " + color.B.ToString() + " ";
             }
-            else
+            else if (checkBox3.Checked == true)
             {
                 p1 = new Point(e.X, e.Y);
+            }
+            else
+            {
+                
             }
 
             this.Invalidate();
@@ -107,21 +109,24 @@ namespace GuiElementsLabeler
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            p2 = new Point(e.X, e.Y);
-
-            if (g != null && (p2.X != 0 & p2.Y != 0))
+            if (checkBox3.Checked == true)
             {
-                Pen pen = new Pen(Color.Red, 2);
-                var userRectange = new Rectangle(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
-                g.DrawRectangle(pen, userRectange);
-            }
+                p2 = new Point(e.X, e.Y);
 
-            if (checkBox1.Checked == true)
-            {
-                DrawGrid();
-            }
+                if (g != null && (p2.X != 0 & p2.Y != 0))
+                {
+                    Pen pen = new Pen(Color.Red, 2);
+                    var userRectange = new Rectangle(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
+                    g.DrawRectangle(pen, userRectange);
+                }
 
-            this.Invalidate();
+                if (checkBox1.Checked == true)
+                {
+                    DrawGrid();
+                }
+
+                this.Invalidate();
+            }
         }
 
         public void DrawGrid()
@@ -173,12 +178,12 @@ namespace GuiElementsLabeler
             var graphics = Graphics.FromImage(bmp);
             graphics.DrawImage(image, rectange, x, y, width, height, GraphicsUnit.Pixel);
 
-            string path = @"C:\Temp2\Flash\MyLabeling\data\" + name + ".bmp";
+            string path = @"C:\Temp\Photos\data\" + name + ".bmp";
             bmp.Save(path, ImageFormat.Bmp);
 
-            image.Dispose();
-            bmp.Dispose();
-            graphics.Dispose();
+            //image.Dispose();
+            //bmp.Dispose();
+            //graphics.Dispose();
 
             return path;
         }
@@ -226,7 +231,7 @@ namespace GuiElementsLabeler
 
             foreach (var item in cellsOfSelection)
             {
-                Console.WriteLine(item);
+                //Console.WriteLine(item);
             }
 
             return cellsOfSelection;
@@ -242,11 +247,6 @@ namespace GuiElementsLabeler
             }
 
             return l;
-        }
-
-        private void Button2_Click_1(object sender, EventArgs e)
-        {
-
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -335,7 +335,7 @@ namespace GuiElementsLabeler
             string output = JsonConvert.SerializeObject(el, Formatting.Indented);
             try
             {
-                StreamWriter sw = new StreamWriter(@"C:\Temp2\Flash\MyLabeling\data\json.json");
+                StreamWriter sw = new StreamWriter(@"C:\Temp\Photos\data\json.json");
                 sw.WriteLine(output);
                 sw.Close();
                 Console.WriteLine(output);
@@ -344,6 +344,11 @@ namespace GuiElementsLabeler
             {
                 Console.WriteLine("Exception: " + ex.Message);
             }
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
