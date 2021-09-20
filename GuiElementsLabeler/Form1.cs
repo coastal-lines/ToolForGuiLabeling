@@ -129,8 +129,8 @@ namespace GuiElementsLabeler
             };
 
             element.ImagePath = CropImageAndReturnPath(
-                pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, 
-                drawingMembers.p2.X - drawingMembers.p1.X, 
+                pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y,
+                drawingMembers.p2.X - drawingMembers.p1.X,
                 drawingMembers.p2.Y - drawingMembers.p1.Y, "main");
 
 
@@ -154,7 +154,7 @@ namespace GuiElementsLabeler
             }
             else
             {
-                
+
             }
 
             this.Invalidate();
