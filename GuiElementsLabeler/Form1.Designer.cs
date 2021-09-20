@@ -55,6 +55,7 @@ namespace GuiElementsLabeler
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,9 +92,7 @@ namespace GuiElementsLabeler
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(178, 4);
+            this.checkBox1.Location = new System.Drawing.Point(247, 4);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(103, 17);
             this.checkBox1.TabIndex = 4;
@@ -102,13 +101,13 @@ namespace GuiElementsLabeler
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(0, 553);
+            this.button2.Location = new System.Drawing.Point(438, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(145, 23);
+            this.button2.Size = new System.Drawing.Size(88, 23);
             this.button2.TabIndex = 28;
-            this.button2.Text = "new layout";
+            this.button2.Text = "new element";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Button2_Click_1);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // textBox4
             // 
@@ -170,11 +169,11 @@ namespace GuiElementsLabeler
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(276, 0);
+            this.button4.Location = new System.Drawing.Point(624, 0);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 29;
-            this.button4.Text = "save json";
+            this.button4.Text = "make list";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
@@ -262,7 +261,7 @@ namespace GuiElementsLabeler
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(357, 4);
+            this.checkBox2.Location = new System.Drawing.Point(347, 4);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(85, 17);
             this.checkBox2.TabIndex = 40;
@@ -272,19 +271,30 @@ namespace GuiElementsLabeler
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(529, 0);
+            this.button5.Location = new System.Drawing.Point(705, 0);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 41;
-            this.button5.Text = "button5";
+            this.button5.Text = "save json";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(178, 4);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(63, 17);
+            this.checkBox3.TabIndex = 42;
+            this.checkBox3.Text = "selector";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1384, 682);
+            this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.textBox16);
@@ -345,6 +355,7 @@ namespace GuiElementsLabeler
         private TextBox textBox16;
         private CheckBox checkBox2;
         private Button button5;
+        private CheckBox checkBox3;
     }
 }
 
