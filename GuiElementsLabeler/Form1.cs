@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text;
 using System.Windows.Forms;
 using GuiElementsLabeler.Helpers;
 using GuiElementsLabeler.PictureBoxParts;
@@ -10,14 +11,16 @@ namespace GuiElementsLabeler
 {
     public partial class Form1 : Form
     {
-
+        private Form2 form2;
         Elements el = new Elements();
         private Graphics g;
         private DrawingMembers drawingMembers;
 
-        public Form1()
+        public Form1(Form2 form2)
         {
             InitializeComponent();
+            this.form2 = form2;
+            this.form2.Show();
             el.elements = new List<Element>();
         }
 
@@ -93,21 +96,21 @@ namespace GuiElementsLabeler
             element.name = "main";
             element.width = pictureBox1.Image.Width.ToString();
             element.heigth = pictureBox1.Image.Height.ToString();
-            element.type = textBox2.Text;
+            element.type = form2.GetType();
             element.color = new ElementColor()
             {
-                active = textBox5.Text
+                active = form2.GetActiveColor()
             };
-            element.parent = textBox6.Text;
-            element.text = textBox4.Text;
+            element.parent = form2.GetParent();
+            element.text = form2.GetText();
 
             element.columns = new List<string>();
             //el.columns = textBox9.Text;
 
             element.scroll = new ElementScroll()
             {
-                vertical = textBox11.Text,
-                horizontal = textBox10.Text
+                vertical = form2.GetVerticalScroll(),
+                horizontal = form2.GetHorizontalScroll()
             };
 
             element.grid = new List<int>();
@@ -151,13 +154,18 @@ namespace GuiElementsLabeler
                             }
                         }
                     }
-
                 }
             }
 
-            /// 
+            
 
-            //element.grid = GetCellsForUserSelection();
+            //print grid into textbox
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in element.grid)
+            {
+                sb.Append(item + " ");
+            }
+            form2.SetGrid(sb.ToString());
 
             element.cells = new List<ElementCell>();
             foreach (var cell in drawingMembers.GetListCell())
@@ -173,10 +181,10 @@ namespace GuiElementsLabeler
 
             element.additional_data = new ElementAdditionalData()
             {
-                arrow = textBox14.Text,
-                width = textBox15.Text,
-                heigth = textBox13.Text,
-                text = textBox16.Text
+                arrow = form2.GetAdditionalArrow(),
+                width = form2.GetAdditionalWidth(),
+                heigth = form2.GetAdditionalHeight(),
+                text = form2.GetAdditionalText()
             };
 
             element.ImagePath = CropImageAndReturnPath(
@@ -185,12 +193,14 @@ namespace GuiElementsLabeler
                 drawingMembers.p2.Y - drawingMembers.p1.Y, "main");
 
 
-            listBox1.Items.Add(element.name);
+            form2.AddToList(element.name);
 
             el.elements.Add(element);
 
             button3.Enabled = false;
             button2.Enabled = true;
+
+            form2.SetName("main!!!9999");
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -202,7 +212,8 @@ namespace GuiElementsLabeler
                     var p = new Point(e.X, e.Y);
                     var bmp = (Bitmap)pictureBox1.Image;
                     drawingMembers.SetColor(bmp.GetPixel(p.X, p.Y)); //= bmp.GetPixel(p.X, p.Y);
-                    textBox5.Text = drawingMembers.GetColor().R.ToString() + " " + drawingMembers.GetColor().G.ToString() + " " + drawingMembers.GetColor().B.ToString() + " ";
+                    var color = drawingMembers.GetColor().R.ToString() + " " + drawingMembers.GetColor().G.ToString() + " " + drawingMembers.GetColor().B.ToString() + " ";
+                    form2.SetColorActive(color);
                 }
                 else if (checkBox3.Checked == true)
                 {
@@ -232,6 +243,9 @@ namespace GuiElementsLabeler
                     {
                         var cells = DrawGrid();
                         drawingMembers.SetListCell(cells);
+
+                        form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
+                        form2.SetHeight((drawingMembers.p2.Y - drawingMembers.p1.Y).ToString());
                     }
 
                     this.Invalidate();
@@ -400,26 +414,26 @@ namespace GuiElementsLabeler
         private void Button4_Click(object sender, EventArgs e)
         {
             Element element = new Element();
-            element.name = textBox1.Text;
+            element.name = form2.GetName();
             //element.width = pictureBox1.Image.Width.ToString();
             //element.heigth = pictureBox1.Image.Height.ToString();
             element.width = (drawingMembers.p2.X - drawingMembers.p1.X).ToString();
             element.heigth = (drawingMembers.p2.Y - drawingMembers.p1.Y).ToString();
-            element.type = textBox2.Text;
+            element.type = form2.GetType();
             element.color = new ElementColor()
             {
-                active = textBox5.Text
+                active = form2.GetActiveColor()
             };
-            element.parent = textBox6.Text;
-            element.text = textBox4.Text;
+            element.parent = form2.GetParent();
+            element.text = form2.GetText();
 
             element.columns = new List<string>();
             //el.columns = textBox9.Text;
 
             element.scroll = new ElementScroll()
             {
-                vertical = textBox11.Text,
-                horizontal = textBox10.Text
+                vertical = form2.GetVerticalScroll(),
+                horizontal = form2.GetHorizontalScroll()
             };
 
             element.grid = new List<int>();
@@ -439,16 +453,16 @@ namespace GuiElementsLabeler
 
             element.additional_data = new ElementAdditionalData()
             {
-                arrow = textBox14.Text,
-                width = textBox15.Text,
-                heigth = textBox13.Text,
-                text = textBox16.Text
+                arrow = form2.GetAdditionalArrow(),
+                width = form2.GetAdditionalWidth(),
+                heigth = form2.GetAdditionalHeight(),
+                text = form2.GetAdditionalText()
             };
 
-            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, textBox1.Text);
+            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, form2.GetName());
 
 
-            listBox1.Items.Add(element.name);
+            form2.AddToList(element.name);
 
             el.elements.Add(element);
 
