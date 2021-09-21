@@ -148,7 +148,7 @@
             // 
             this.textBox6.Location = new System.Drawing.Point(103, 144);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(145, 20);
+            this.textBox6.Size = new System.Drawing.Size(40, 20);
             this.textBox6.TabIndex = 44;
             this.textBox6.Text = "parent";
             // 
@@ -336,9 +336,9 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(405, 144);
+            this.comboBox2.Location = new System.Drawing.Point(144, 143);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.Size = new System.Drawing.Size(104, 21);
             this.comboBox2.TabIndex = 74;
             // 
             // comboBox3
@@ -367,7 +367,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 544);
+            this.ClientSize = new System.Drawing.Size(413, 379);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBox2);
@@ -402,6 +402,7 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.listBox1);
+            this.MaximizeBox = false;
             this.Name = "Form2";
             this.Text = "Form2";
             this.ResumeLayout(false);

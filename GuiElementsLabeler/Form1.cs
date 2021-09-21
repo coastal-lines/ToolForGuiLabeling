@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Windows.Forms;
@@ -12,9 +13,10 @@ namespace GuiElementsLabeler
     public partial class Form1 : Form
     {
         private Form2 form2;
-        Elements el = new Elements();
+        private Elements el = new Elements();
         private Graphics g;
         private DrawingMembers drawingMembers;
+        private bool drawingBlocker = true;
 
         public Form1(Form2 form2)
         {
@@ -39,6 +41,8 @@ namespace GuiElementsLabeler
             checkBox1.Enabled = true;
             checkBox2.Enabled = true;
             checkBox3.Enabled = true;
+
+            drawingBlocker = true;
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -201,55 +205,75 @@ namespace GuiElementsLabeler
             button2.Enabled = true;
 
             form2.SetName("main!!!9999");
+            form2.SetParent("main");
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            if (!checkBox2.Enabled && checkBox1.Enabled || checkBox3.Enabled)
+            if (drawingBlocker)
             {
-                if (checkBox2.Checked == true)
+                if (drawingBlocker && !checkBox2.Enabled && checkBox1.Enabled || checkBox3.Enabled)
                 {
+                    drawingMembers.p1 = new Point(e.X, e.Y);
+                    this.Invalidate();
+                }
+
+                else if (checkBox2.Checked == true)
+                {
+                    drawingMembers.p1 = new Point(e.X, e.Y);
+
                     var p = new Point(e.X, e.Y);
                     var bmp = (Bitmap)pictureBox1.Image;
                     drawingMembers.SetColor(bmp.GetPixel(p.X, p.Y)); //= bmp.GetPixel(p.X, p.Y);
                     var color = drawingMembers.GetColor().R.ToString() + " " + drawingMembers.GetColor().G.ToString() + " " + drawingMembers.GetColor().B.ToString() + " ";
                     form2.SetColorActive(color);
+                    this.Invalidate();
                 }
-                else if (checkBox3.Checked == true)
-                {
-                    drawingMembers.p1 = new Point(e.X, e.Y);
-                }
+            }
+            else if (checkBox2.Checked == true)
+            {
+                drawingMembers.p1 = new Point(e.X, e.Y);
 
+                var p = new Point(e.X, e.Y);
+                var bmp = (Bitmap)pictureBox1.Image;
+                drawingMembers.SetColor(bmp.GetPixel(p.X, p.Y)); //= bmp.GetPixel(p.X, p.Y);
+                var color = drawingMembers.GetColor().R.ToString() + " " + drawingMembers.GetColor().G.ToString() + " " + drawingMembers.GetColor().B.ToString() + " ";
+                form2.SetColorActive(color);
                 this.Invalidate();
             }
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            if (!checkBox2.Enabled && checkBox1.Enabled || checkBox3.Enabled)
+            if (drawingBlocker)
             {
-                if (checkBox3.Checked == true)
+                if (!checkBox2.Enabled && checkBox1.Enabled || checkBox3.Enabled)
                 {
-                    drawingMembers.p2 = new Point(e.X, e.Y);
-
-                    if (g != null && (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0))
+                    if (checkBox3.Checked == true)
                     {
-                        Pen pen = new Pen(Color.Red, 2);
-                        var userRectange = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
-                        g.DrawRectangle(pen, userRectange);
+                        drawingMembers.p2 = new Point(e.X, e.Y);
+
+                        if (g != null && (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0))
+                        {
+                            Pen pen = new Pen(Color.Red, 2);
+                            var userRectange = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
+                            g.DrawRectangle(pen, userRectange);
+                        }
+
+                        if (checkBox1.Checked == true)
+                        {
+                            var cells = DrawGrid();
+                            drawingMembers.SetListCell(cells);
+
+                            form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
+                            form2.SetHeight((drawingMembers.p2.Y - drawingMembers.p1.Y).ToString());
+                        }
+
+                        this.Invalidate();
                     }
-
-                    if (checkBox1.Checked == true)
-                    {
-                        var cells = DrawGrid();
-                        drawingMembers.SetListCell(cells);
-
-                        form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
-                        form2.SetHeight((drawingMembers.p2.Y - drawingMembers.p1.Y).ToString());
-                    }
-
-                    this.Invalidate();
                 }
+
+                drawingBlocker = false;
             }
         }
 
@@ -355,42 +379,7 @@ namespace GuiElementsLabeler
 
                 }
             }
-            /*
-            //обходим все ячейки
-            for (int i = 0; i < drawingMembers.GetListCell().Count; i++)
-            {
-                var lineW = GenerateSegment(drawingMembers.GetListCell()[i].X1, drawingMembers.GetListCell()[i].X2);
-                var lineH = GenerateSegment(drawingMembers.GetListCell()[i].Y1, drawingMembers.GetListCell()[i].Y2);
 
-                //проверяем совпадение по горизонтали
-                for (int j = 0; j < lineW.Count; j++)
-                {
-                    for (int k = 0; k < userW.Count; k++)
-                    {
-                        if (userW[k] == lineW[j])
-                        {
-                            //проверяем совпадение по вертикали
-                            for (int m = 0; m < lineH.Count; m++)
-                            {
-                                for (int l = 0; l < userH.Count; l++)
-                                {
-                                    if (userH[l] == lineH[m])
-                                    {
-                                        if (!cellsOfSelection.Contains(i))
-                                        {
-                                            cellsOfSelection.Add(i);
-                                        }
-
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-            */
             foreach (var item in cellsOfSelection)
             {
                 //Console.WriteLine(item);
@@ -415,8 +404,6 @@ namespace GuiElementsLabeler
         {
             Element element = new Element();
             element.name = form2.GetName();
-            //element.width = pictureBox1.Image.Width.ToString();
-            //element.heigth = pictureBox1.Image.Height.ToString();
             element.width = (drawingMembers.p2.X - drawingMembers.p1.X).ToString();
             element.heigth = (drawingMembers.p2.Y - drawingMembers.p1.Y).ToString();
             element.type = form2.GetType();
@@ -471,16 +458,9 @@ namespace GuiElementsLabeler
             checkBox2.Enabled = false;
             checkBox3.Enabled = false;
             button4.Enabled = false;
-        }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox11_TextChanged(object sender, EventArgs e)
-        {
-
+            form2.SetParent(form2.GetParent());
+            drawingBlocker = true;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -499,24 +479,8 @@ namespace GuiElementsLabeler
             }
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
-            /*
-            foreach (var element in el.elements)
-            {
-                element.ImagePath = CropImageAndReturnPath(
-                    pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y,
-                    drawingMembers.p2.X - drawingMembers.p1.X, 
-                    drawingMembers.p2.Y - drawingMembers.p1.Y, 
-                    element.name);
-
-            }
-            */
             FilesHelper.SaveJsonFile(el);
         }
 
