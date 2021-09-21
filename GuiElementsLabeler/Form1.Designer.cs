@@ -169,11 +169,11 @@ namespace GuiElementsLabeler
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(624, 0);
+            this.button4.Location = new System.Drawing.Point(532, 0);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(98, 23);
             this.button4.TabIndex = 29;
-            this.button4.Text = "make list";
+            this.button4.Text = "add to list";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
@@ -271,7 +271,7 @@ namespace GuiElementsLabeler
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(705, 0);
+            this.button5.Location = new System.Drawing.Point(636, 0);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 41;

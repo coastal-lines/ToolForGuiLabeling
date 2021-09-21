@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Windows.Forms;
 using GuiElementsLabeler.Helpers;
 using GuiElementsLabeler.PictureBoxParts;
-using Newtonsoft.Json;
 
 namespace GuiElementsLabeler
 {
@@ -37,6 +35,8 @@ namespace GuiElementsLabeler
 
         private void Button3_Click(object sender, EventArgs e)
         {
+            drawingMembers = new DrawingMembers();
+
             drawingMembers.p1 = new Point(0, 0);
             drawingMembers.p2 = new Point(pictureBox1.Image.Width, pictureBox1.Image.Height);
 
@@ -309,7 +309,7 @@ namespace GuiElementsLabeler
             //element.width = pictureBox1.Image.Width.ToString();
             //element.heigth = pictureBox1.Image.Height.ToString();
             element.width = (drawingMembers.p2.X - drawingMembers.p1.X).ToString();
-            element.heigth = (drawingMembers.p2.Y - drawingMembers.p2.Y).ToString();
+            element.heigth = (drawingMembers.p2.Y - drawingMembers.p1.Y).ToString();
             element.type = textBox2.Text;
             element.color = new ElementColor()
             {
@@ -350,7 +350,7 @@ namespace GuiElementsLabeler
                 text = textBox16.Text
             };
 
-            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, "main");
+            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, textBox1.Text);
 
 
             listBox1.Items.Add(element);
