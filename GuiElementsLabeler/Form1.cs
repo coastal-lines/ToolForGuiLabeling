@@ -28,7 +28,7 @@ namespace GuiElementsLabeler
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Load(@"C:\Temp\Photos\Tests.bmp");
+            pictureBox1.Load(@"C:\Temp2\Flash\MyLabeling\ORB\FullTests.png");
             pictureBox1.Width = pictureBox1.Image.Width;
             pictureBox1.Height = pictureBox1.Image.Height;
         }
@@ -43,6 +43,22 @@ namespace GuiElementsLabeler
             checkBox3.Enabled = true;
 
             drawingBlocker = true;
+
+            //clean form2
+            form2.SetName("");
+            form2.SetWidth("");
+            form2.SetHeight("");
+            form2.SetColorActive("");
+            form2.SetColorNonActive("");
+            form2.SetText("");
+            form2.SetColumns("");
+            form2.SetVerticalScroll("");
+            form2.SetHorizontalScroll("");
+            form2.SetGrid("");
+            form2.SetAdditionalArrow("");
+            form2.SetAdditionalWidth("");
+            form2.SetAdditionalHeight("");
+            form2.SetAdditionalText("");
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -204,8 +220,11 @@ namespace GuiElementsLabeler
             button3.Enabled = false;
             button2.Enabled = true;
 
-            form2.SetName("main!!!9999");
+            form2.SetName("main");
             form2.SetParent("main");
+
+            form2.SetWidth(pictureBox1.Image.Width.ToString());
+            form2.SetHeight(pictureBox1.Image.Height.ToString());
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -265,9 +284,12 @@ namespace GuiElementsLabeler
                             var cells = DrawGrid();
                             drawingMembers.SetListCell(cells);
 
-                            form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
-                            form2.SetHeight((drawingMembers.p2.Y - drawingMembers.p1.Y).ToString());
+                            //form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
+                            //form2.SetHeight((drawingMembers.p2.Y - drawingMembers.p1.Y).ToString());
                         }
+
+                        form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
+                        form2.SetHeight((drawingMembers.p2.Y - drawingMembers.p1.Y).ToString());
 
                         this.Invalidate();
                     }
@@ -459,7 +481,7 @@ namespace GuiElementsLabeler
             checkBox3.Enabled = false;
             button4.Enabled = false;
 
-            form2.SetParent(form2.GetParent());
+            form2.SetParent(form2.GetName());
             drawingBlocker = true;
         }
 

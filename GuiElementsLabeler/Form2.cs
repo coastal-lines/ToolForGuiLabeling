@@ -24,11 +24,6 @@ namespace GuiElementsLabeler
             textBox1.Text = text;
         }
 
-        //public void SetType(string text)
-        // {
-        //    textBox2.Text = text;
-        //}
-
         public void SetWidth(string text)
         {
             textBox3.Text = text;
@@ -67,12 +62,12 @@ namespace GuiElementsLabeler
 
         public void SetVerticalScroll(string text)
         {
-            //textBox11.Text = text;
+            comboBox3.SelectedItem = text;
         }
 
         public void SetHorizontalScroll(string text)
         {
-            //textBox10.Text = text;
+            comboBox4.SelectedItem = text;
         }
 
         public void SetGrid(string text)
