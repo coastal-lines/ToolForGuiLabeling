@@ -26,14 +26,6 @@ namespace GuiElementsLabeler
         public string text { get; set; }
     }
 
-    public class ElementCell
-    {
-        public int X1 { get; set; }
-        public int Y1 { get; set; }
-        public int X2 { get; set; }
-        public int Y2 { get; set; }
-    }
-
     public class Element
     {
         public string name { get; set; }
@@ -45,9 +37,7 @@ namespace GuiElementsLabeler
         public string text { get; set; }
         public List<string> columns { get; set; }
         public ElementScroll scroll { get; set; }
-        public List<int> grid { get; set; }
         public ElementAdditionalData additional_data { get; set; }
-        public List<ElementCell> cells { get; set; }
         public string ImagePath { get; set; }
     }
 
