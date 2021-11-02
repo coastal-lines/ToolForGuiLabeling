@@ -33,7 +33,6 @@ namespace GuiElementsLabeler
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -72,22 +71,10 @@ namespace GuiElementsLabeler
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(247, 4);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(103, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "grid for selection";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
-            // 
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(438, 0);
+            this.button2.Location = new System.Drawing.Point(338, 0);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(88, 23);
             this.button2.TabIndex = 28;
@@ -98,7 +85,7 @@ namespace GuiElementsLabeler
             // button4
             // 
             this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(532, 0);
+            this.button4.Location = new System.Drawing.Point(432, 0);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(98, 23);
             this.button4.TabIndex = 29;
@@ -110,7 +97,7 @@ namespace GuiElementsLabeler
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(347, 4);
+            this.checkBox2.Location = new System.Drawing.Point(247, 4);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(85, 17);
             this.checkBox2.TabIndex = 40;
@@ -120,7 +107,7 @@ namespace GuiElementsLabeler
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(636, 0);
+            this.button5.Location = new System.Drawing.Point(536, 0);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 41;
@@ -131,6 +118,8 @@ namespace GuiElementsLabeler
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox3.Enabled = false;
             this.checkBox3.Location = new System.Drawing.Point(178, 4);
             this.checkBox3.Name = "checkBox3";
@@ -150,7 +139,6 @@ namespace GuiElementsLabeler
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
@@ -167,7 +155,6 @@ namespace GuiElementsLabeler
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button3;
-        private CheckBox checkBox1;
         private Button button2;
         private Button button4;
         private CheckBox checkBox2;
