@@ -70,29 +70,9 @@ namespace GuiElementsLabeler
             comboBox4.SelectedItem = text;
         }
 
-        public void SetGrid(string text)
+        public void SetScreenResolution(string text)
         {
             textBox12.Text = text;
-        }
-
-        public void SetAdditionalArrow(string text)
-        {
-            textBox14.Text = text;
-        }
-
-        public void SetAdditionalWidth(string text)
-        {
-            textBox15.Text = text;
-        }
-
-        public void SetAdditionalHeight(string text)
-        {
-            textBox13.Text = text;
-        }
-
-        public void SetAdditionalText(string text)
-        {
-            textBox16.Text = text;
         }
 
         public void AddToList(string text)
@@ -149,26 +129,11 @@ namespace GuiElementsLabeler
             return comboBox4.Items[0].ToString();
         }
 
-        public string GetAdditionalArrow()
-        {
-            return textBox14.Text;
-        }
-
-        public string GetAdditionalWidth()
-        {
-            return textBox15.Text;
-        }
-
-        public string GetAdditionalHeight()
-        {
-            return textBox13.Text;
-        }
-
-        public string GetAdditionalText()
-        {
-            return textBox16.Text;
-        }
-
         #endregion
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

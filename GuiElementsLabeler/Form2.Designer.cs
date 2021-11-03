@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -50,11 +45,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -62,47 +52,11 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // textBox16
-            // 
-            this.textBox16.Location = new System.Drawing.Point(103, 347);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(145, 20);
-            this.textBox16.TabIndex = 56;
-            this.textBox16.Text = "additional: text";
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(103, 323);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(145, 20);
-            this.textBox13.TabIndex = 55;
-            this.textBox13.Text = "additional: heigth";
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(103, 277);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(145, 20);
-            this.textBox14.TabIndex = 54;
-            this.textBox14.Text = "additional: arrow";
-            // 
-            // textBox15
-            // 
-            this.textBox15.Location = new System.Drawing.Point(103, 300);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(145, 20);
-            this.textBox15.TabIndex = 53;
-            this.textBox15.Text = "additional: width";
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(103, 254);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(145, 20);
-            this.textBox12.TabIndex = 52;
-            this.textBox12.Text = "grid";
             // 
             // textBox9
             // 
@@ -173,7 +127,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(254, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(145, 355);
+            this.listBox1.Size = new System.Drawing.Size(145, 264);
             this.listBox1.TabIndex = 40;
             // 
             // label1
@@ -248,51 +202,6 @@
             this.label8.TabIndex = 61;
             this.label8.Text = "active color";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 350);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 13);
-            this.label9.TabIndex = 72;
-            this.label9.Text = "additional: text";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 326);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(87, 13);
-            this.label10.TabIndex = 71;
-            this.label10.Text = "additional: height";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(13, 303);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(83, 13);
-            this.label11.TabIndex = 70;
-            this.label11.Text = "additional: width";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(13, 281);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(58, 13);
-            this.label12.TabIndex = 69;
-            this.label12.Text = "additional: ";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(13, 258);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(24, 13);
-            this.label13.TabIndex = 68;
-            this.label13.Text = "grid";
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -364,19 +273,52 @@
             this.comboBox4.Size = new System.Drawing.Size(145, 21);
             this.comboBox4.TabIndex = 76;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(13, 258);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(87, 13);
+            this.label13.TabIndex = 68;
+            this.label13.Text = "screen resolution";
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(103, 254);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(59, 20);
+            this.textBox12.TabIndex = 52;
+            this.textBox12.Text = "1920";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(189, 254);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(59, 20);
+            this.textBox2.TabIndex = 77;
+            this.textBox2.Text = "1080";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(171, 257);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(12, 13);
+            this.label17.TabIndex = 78;
+            this.label17.Text = "x";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 379);
+            this.ClientSize = new System.Drawing.Size(413, 284);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label15);
@@ -389,10 +331,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox16);
-            this.Controls.Add(this.textBox13);
-            this.Controls.Add(this.textBox14);
-            this.Controls.Add(this.textBox15);
             this.Controls.Add(this.textBox12);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.textBox8);
@@ -412,12 +350,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBox16;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.TextBox textBox7;
@@ -435,11 +367,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
@@ -447,5 +374,9 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label17;
     }
 }

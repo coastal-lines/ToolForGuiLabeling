@@ -64,7 +64,6 @@
     </Compile>
     <Compile Include="Helpers\ElementsHelpers.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
-    <Compile Include="PictureBoxParts\Cell.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
