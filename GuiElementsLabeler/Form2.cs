@@ -70,9 +70,10 @@ namespace GuiElementsLabeler
             comboBox4.SelectedItem = text;
         }
 
-        public void SetScreenResolution(string text)
+        public void SetScreenResolution(string w, string h)
         {
-            textBox12.Text = text;
+            textBox12.Text = w;
+            textBox2.Text = h;
         }
 
         public void AddToList(string text)

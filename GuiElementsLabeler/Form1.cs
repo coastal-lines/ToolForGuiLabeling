@@ -42,6 +42,9 @@ namespace GuiElementsLabeler
                 pictureBox1.Load(pathToFile);
                 pictureBox1.Width = pictureBox1.Image.Width;
                 pictureBox1.Height = pictureBox1.Image.Height;
+
+                form2.SetScreenResolution(pictureBox1.Image.Width.ToString(), pictureBox1.Image.Height.ToString());
+
                 /*
                 drawingMembers = new DrawingMembers();
 
@@ -80,7 +83,6 @@ namespace GuiElementsLabeler
             form2.SetColumns("");
             form2.SetVerticalScroll("");
             form2.SetHorizontalScroll("");
-            form2.SetScreenResolution("");
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -200,6 +202,7 @@ namespace GuiElementsLabeler
 
             element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, form2.GetName());
 
+            element.ScreenResolution = new string[] { pictureBox1.Image.Width.ToString(), pictureBox1.Image.Height.ToString() };
 
             form2.AddToList(element.name);
 

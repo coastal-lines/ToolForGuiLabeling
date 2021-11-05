@@ -18,14 +18,6 @@ namespace GuiElementsLabeler
         public string vertical { get; set; }
     }
 
-    public class ElementAdditionalData
-    {
-        public string arrow { get; set; }
-        public string width { get; set; }
-        public string heigth { get; set; }
-        public string text { get; set; }
-    }
-
     public class Element
     {
         public string name { get; set; }
@@ -37,8 +29,8 @@ namespace GuiElementsLabeler
         public string text { get; set; }
         public List<string> columns { get; set; }
         public ElementScroll scroll { get; set; }
-        public ElementAdditionalData additional_data { get; set; }
         public string ImagePath { get; set; }
+        public string[] ScreenResolution { get; set; }
     }
 
     public class Elements
