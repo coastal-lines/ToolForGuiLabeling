@@ -42,18 +42,27 @@ namespace GuiElementsLabeler
                 pictureBox1.Load(pathToFile);
                 pictureBox1.Width = pictureBox1.Image.Width;
                 pictureBox1.Height = pictureBox1.Image.Height;
+                /*
                 drawingMembers = new DrawingMembers();
 
                 selectorCheckBox.Enabled = true;
                 colorPeakerCheckBox.Enabled = true;
 
                 g = pictureBox1.CreateGraphics();
+                */
             }
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
             drawingMembers = new DrawingMembers();
+
+            selectorCheckBox.Enabled = true;
+            colorPeakerCheckBox.Enabled = true;
+
+            g = pictureBox1.CreateGraphics();
+
+            //drawingMembers = new DrawingMembers();
             button4.Enabled = true;
             newElementButton.Enabled = false;
             colorPeakerCheckBox.Enabled = true;
