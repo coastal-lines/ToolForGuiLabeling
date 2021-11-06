@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using GuiElementsLabeler.Helpers;
+using GuiElementsLabeler.ProjectModel;
+using Newtonsoft.Json;
 
 namespace GuiElementsLabeler
 {
@@ -15,6 +18,9 @@ namespace GuiElementsLabeler
         private Graphics g;
         private DrawingMembers drawingMembers;
         private bool drawingBlocker = false;
+        private Rectangles userRectangles;
+        private Rectangle rectangle;
+        private string fileName;
 
         public Form1(Form2 form2)
         {
@@ -35,6 +41,7 @@ namespace GuiElementsLabeler
             if (theDialog.ShowDialog() == DialogResult.OK)
             {
                 pathToFile = theDialog.FileName;
+                fileName = theDialog.SafeFileName;
             }
 
             if (File.Exists(pathToFile))
@@ -45,14 +52,8 @@ namespace GuiElementsLabeler
 
                 form2.SetScreenResolution(pictureBox1.Image.Width.ToString(), pictureBox1.Image.Height.ToString());
 
-                /*
-                drawingMembers = new DrawingMembers();
-
-                selectorCheckBox.Enabled = true;
-                colorPeakerCheckBox.Enabled = true;
-
-                g = pictureBox1.CreateGraphics();
-                */
+                userRectangles = new Rectangles();
+                userRectangles.ListRectangles = new List<UserRectangle>();
             }
         }
 
@@ -95,6 +96,7 @@ namespace GuiElementsLabeler
                     this.Invalidate();
                 }
 
+                /*
                 else if (colorPeakerCheckBox.Checked == true)
                 {
                     drawingMembers.p1 = new Point(e.X, e.Y);
@@ -106,6 +108,7 @@ namespace GuiElementsLabeler
                     form2.SetColorActive(color);
                     this.Invalidate();
                 }
+                */
             }
             else if (colorPeakerCheckBox.Checked == true)
             {
@@ -133,8 +136,8 @@ namespace GuiElementsLabeler
                         if (g != null && (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0))
                         {
                             Pen pen = new Pen(Color.Red, 2);
-                            var userRectange = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
-                            g.DrawRectangle(pen, userRectange);
+                            rectangle = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
+                            g.DrawRectangle(pen, rectangle);
                         }
 
                         form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
@@ -213,8 +216,11 @@ namespace GuiElementsLabeler
             selectorCheckBox.Enabled = false;
             button4.Enabled = false;
 
-            form2.SetParent(form2.GetName());
-            drawingBlocker = true;
+            userRectangles.ListRectangles.Add(new UserRectangle() 
+            { 
+                FileName = fileName,
+                Rectangle = rectangle
+            });
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -254,6 +260,11 @@ namespace GuiElementsLabeler
             {
                 colorPeakerCheckBox.Enabled = true;
             }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            FilesHelper.SaveProjectFile(userRectangles);
         }
     }
 
