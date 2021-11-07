@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using GuiElementsLabeler.Helpers;
 using GuiElementsLabeler.ProjectModel;
-using Newtonsoft.Json;
 
 namespace GuiElementsLabeler
 {
@@ -265,6 +263,11 @@ namespace GuiElementsLabeler
         private void button2_Click_1(object sender, EventArgs e)
         {
             FilesHelper.SaveProjectFile(userRectangles);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FilesHelper.ReadProjectFile();
         }
     }
 

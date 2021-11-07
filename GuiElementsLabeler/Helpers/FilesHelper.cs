@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuiElementsLabeler.ProjectModel;
 using Newtonsoft.Json;
 
@@ -41,6 +37,11 @@ namespace GuiElementsLabeler.Helpers
             {
                 Console.WriteLine("Exception: " + ex.Message);
             }
+        }
+
+        public static void ReadProjectFile()
+        {
+            Rectangles userRectangles = JsonConvert.DeserializeObject<Rectangles>(File.ReadAllText(@"C:\Temp\Photos\data\rectangles.data"));
         }
     }
 }
