@@ -56,6 +56,8 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // textBox9
@@ -127,7 +129,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(254, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(145, 264);
+            this.listBox1.Size = new System.Drawing.Size(145, 290);
             this.listBox1.TabIndex = 40;
             // 
             // label1
@@ -235,6 +237,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "groupbox",
             "combobox",
+            "checkbox",
             "button",
             "input",
             "table"});
@@ -306,13 +309,36 @@
             this.label17.Size = new System.Drawing.Size(12, 13);
             this.label17.TabIndex = 78;
             this.label17.Text = "x";
-            this.label17.Click += new System.EventHandler(this.label17_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(14, 279);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 82;
+            this.label9.Text = "find by";
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "contour",
+            "pattern",
+            "contour_or_pattern",
+            "color"});
+            this.comboBox5.Location = new System.Drawing.Point(103, 276);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(145, 21);
+            this.comboBox5.TabIndex = 81;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 284);
+            this.ClientSize = new System.Drawing.Size(413, 308);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.comboBox5);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.comboBox4);
@@ -378,5 +404,7 @@
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBox5;
     }
 }

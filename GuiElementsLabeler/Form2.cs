@@ -76,6 +76,11 @@ namespace GuiElementsLabeler
             textBox2.Text = h;
         }
 
+        public void SetFindBy(string method)
+        {
+            comboBox5.SelectedItem = Text;
+        }
+
         public void AddToList(string text)
         {
             listBox1.Items.Add(text);
@@ -89,7 +94,7 @@ namespace GuiElementsLabeler
         {
             return textBox1.Text;
         }
-        
+
         public string GetType()
         {
             if (comboBox1.SelectedItem != null)
@@ -99,7 +104,7 @@ namespace GuiElementsLabeler
 
             return "";
         }
-        
+
         public string GetActiveColor()
         {
             return textBox5.Text;
@@ -130,11 +135,11 @@ namespace GuiElementsLabeler
             return comboBox4.Items[0].ToString();
         }
 
-        #endregion
-
-        private void label17_Click(object sender, EventArgs e)
+        public string GetFindBy()
         {
-
+            return comboBox5.Items[0].ToString();
         }
+
+        #endregion
     }
 }

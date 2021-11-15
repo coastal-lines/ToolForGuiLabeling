@@ -13,12 +13,13 @@ namespace GuiElementsLabeler
     {
         private Form2 form2;
         private Elements el = new Elements();
-        private Graphics g;
+        //private Graphics g;
         private DrawingMembers drawingMembers;
         private bool drawingBlocker = false;
         private Rectangles userRectangles;
         private Rectangle rectangle;
         private string fileName;
+        private Image originalImage;
 
         public Form1(Form2 form2)
         {
@@ -48,6 +49,8 @@ namespace GuiElementsLabeler
                 pictureBox1.Width = pictureBox1.Image.Width;
                 pictureBox1.Height = pictureBox1.Image.Height;
 
+                originalImage = Image.FromFile(pathToFile);
+
                 form2.SetScreenResolution(pictureBox1.Image.Width.ToString(), pictureBox1.Image.Height.ToString());
 
                 userRectangles = new Rectangles();
@@ -62,7 +65,7 @@ namespace GuiElementsLabeler
             selectorCheckBox.Enabled = true;
             colorPeakerCheckBox.Enabled = true;
 
-            g = pictureBox1.CreateGraphics();
+            //g = pictureBox1.CreateGraphics();
 
             //drawingMembers = new DrawingMembers();
             button4.Enabled = true;
@@ -131,11 +134,21 @@ namespace GuiElementsLabeler
                     {
                         drawingMembers.p2 = new Point(e.X, e.Y);
 
-                        if (g != null && (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0))
-                        {
-                            Pen pen = new Pen(Color.Red, 2);
+                        //if (g != null && (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0))
+                        if (drawingMembers.p2.X != 0 & drawingMembers.p2.Y != 0)
+{
+                            Pen pen = new Pen(Color.Aqua, 2);
                             rectangle = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
-                            g.DrawRectangle(pen, rectangle);
+                            //g.DrawRectangle(pen, rectangle);
+
+                            Image bmp = pictureBox1.Image;
+                            using (Graphics G = Graphics.FromImage(bmp))
+                            {
+                                rectangle = new Rectangle(drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y);
+                                G.DrawRectangle(pen, rectangle);
+
+                            }
+                            pictureBox1.Image = bmp;
                         }
 
                         form2.SetWidth((drawingMembers.p2.X - drawingMembers.p1.X).ToString());
@@ -201,9 +214,11 @@ namespace GuiElementsLabeler
                 horizontal = form2.GetHorizontalScroll()
             };
 
-            element.ImagePath = CropImageAndReturnPath(pictureBox1.Image, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, form2.GetName());
+            element.ImagePath = CropImageAndReturnPath(originalImage, drawingMembers.p1.X, drawingMembers.p1.Y, drawingMembers.p2.X - drawingMembers.p1.X, drawingMembers.p2.Y - drawingMembers.p1.Y, form2.GetName());
 
             element.ScreenResolution = new string[] { pictureBox1.Image.Width.ToString(), pictureBox1.Image.Height.ToString() };
+
+            element.FindBy = form2.GetFindBy();
 
             form2.AddToList(element.name);
 
